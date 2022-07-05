@@ -74,19 +74,24 @@ public class PlayerController : MonoBehaviour
             _state = PlayerState.Attack;
             _targetObject.SetActive(false);
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (_state != PlayerState.Attack)
         {
-            _targetObject.SetActive(true);
-        }
-        if (Input.GetButton("Fire1"))
-        {
-            Vector3 point = PointGet();
-            if (_targetObject)
+            //if (Input.GetButtonDown("Fire1"))
+            //{
+            //}
+            if (Input.GetButton("Fire1"))
             {
-                float dis = Vector3.Distance(transform.position, point);
-                _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-                _targetObject.transform.position = _destination;
-                Debug.Log(dis <= 10);
+                if (!_targetObject.activeSelf)
+                {
+                    _targetObject.SetActive(true);
+                }
+                Vector3 point = PointGet();
+                if (_targetObject)
+                {
+                    float dis = Vector3.Distance(transform.position, point);
+                    _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+                    _targetObject.transform.position = _destination;
+                }
             }
         }
         if (Input.GetButton("Fire2"))
