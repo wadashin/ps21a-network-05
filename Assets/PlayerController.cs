@@ -17,12 +17,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _moveSpeed = 6f;
     /// <summary>攻撃速度</summary>
     [SerializeField] float _attackSpeed = 20f;
+    [Tooltip("攻撃可能距離")]
+    [SerializeField] float _attackLange = 10f;
     /// <summary>クリック可能なレイヤー</summary>
     [SerializeField] LayerMask _layerMask;
     /// <summary>移動のためのレイキャストの距離</summary>
     [SerializeField] float _raycastDistance = 20f;
     /// <summary>ストップする目的地からの距離</summary>
     [SerializeField] float _stoppingDistance = 1f;
+    [Tooltip("ターゲットを示すオブジェクト")]
+    [SerializeField] GameObject _targetObject;
     PhotonView _view;
     Rigidbody _rb;
     /// <summary>目的地の座標</summary>
@@ -35,6 +39,9 @@ public class PlayerController : MonoBehaviour
         _view = GetComponent<PhotonView>();
         _rb = GetComponent<Rigidbody>();
         _destination = transform.position;
+        _targetObject = Instantiate(_targetObject);
+        _rb.transform.position = _destination;
+        _targetObject.SetActive(false);
 
         if (_view.IsMine)
         {
@@ -57,18 +64,34 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!_view.IsMine) return;
-        if (_state == PlayerState.Idol)
+        if (Input.GetButtonUp("Fire2"))
         {
-            if (Input.GetButton("Fire2"))
+            _state = PlayerState.Move;
+            PointSet();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            _state = PlayerState.Attack;
+            _targetObject.SetActive(false);
+        }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _targetObject.SetActive(true);
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            Vector3 point = PointGet();
+            if (_targetObject)
             {
-                PointSet();
-                _state = PlayerState.Move;
+                float dis = Vector3.Distance(transform.position, point);
+                _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+                _targetObject.transform.position = _destination;
+                Debug.Log(dis <= 10);
             }
-            if (Input.GetButton("Fire1"))
-            {
-                PointSet();
-                _state = PlayerState.Attack;
-            }
+        }
+        if (Input.GetButton("Fire2"))
+        {
+
         }
 
         if (_state == PlayerState.Move || _state == PlayerState.Attack)
@@ -81,8 +104,8 @@ public class PlayerController : MonoBehaviour
             else
             {
                 float speed = 0;
-                if(_state == PlayerState.Attack) speed = _attackSpeed;
-                else if(_state == PlayerState.Move) speed = _moveSpeed;
+                if (_state == PlayerState.Attack) speed = _attackSpeed;
+                else if (_state == PlayerState.Move) speed = _moveSpeed;
                 Vector3 dir = _destination - transform.position;
                 dir.y = 0;
                 dir = dir.normalized * speed;
@@ -102,6 +125,21 @@ public class PlayerController : MonoBehaviour
         {
             _destination = hit.point;
         }
+    }
+
+    /// <summary>
+    /// ポインターの位置を取得 
+    /// </summary>
+    /// <returns></returns>
+    Vector3 PointGet()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
+        {
+            return hit.point;
+        }
+        return transform.position;
     }
 
 }
