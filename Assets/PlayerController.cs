@@ -14,7 +14,9 @@ using ExitGames.Client.Photon;
 public class PlayerController : MonoBehaviour
 {
     /// <summary>移動速度</summary>
-    [SerializeField] float _speed = 6f;
+    [SerializeField] float _moveSpeed = 6f;
+    /// <summary>攻撃速度</summary>
+    [SerializeField] float _attackSpeed = 20f;
     /// <summary>クリック可能なレイヤー</summary>
     [SerializeField] LayerMask _layerMask;
     /// <summary>移動のためのレイキャストの距離</summary>
@@ -25,6 +27,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     /// <summary>目的地の座標</summary>
     Vector3 _destination;
+    /// <summary>プレイヤーの現在の状態</summary>
+    PlayerState _state;
 
     void Start()
     {
@@ -53,27 +57,62 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!_view.IsMine) return;
-
-        if (Input.GetButton("Fire2"))
+        if (_state == PlayerState.Idol)
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
+            if (Input.GetButton("Fire2"))
             {
-                _destination = hit.point;
+                PointSet();
+                _state = PlayerState.Move;
+            }
+            if (Input.GetButton("Fire1"))
+            {
+                PointSet();
+                _state = PlayerState.Attack;
             }
         }
 
-        if (Vector3.Distance(transform.position, _destination) < _stoppingDistance)
+        if (_state == PlayerState.Move || _state == PlayerState.Attack)
         {
-            _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
-        }
-        else
-        {
-            Vector3 dir = _destination - transform.position;
-            dir.y = 0;
-            dir = dir.normalized * _speed;
-            _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
+            if (Vector3.Distance(transform.position, _destination) < _stoppingDistance)
+            {
+                _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
+                _state = PlayerState.Idol;
+            }
+            else
+            {
+                float speed = 0;
+                if(_state == PlayerState.Attack) speed = _attackSpeed;
+                else if(_state == PlayerState.Move) speed = _moveSpeed;
+                Vector3 dir = _destination - transform.position;
+                dir.y = 0;
+                dir = dir.normalized * speed;
+                _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
+            }
         }
     }
+
+    void PointSet()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
+        {
+            _destination = hit.point;
+        }
+    }
+
+}
+
+
+/// <summary>
+/// プレイヤーの状態
+/// </summary>
+public enum PlayerState
+{
+    /// <summary>待機</summary>
+    Idol,
+    /// <summary>移動</summary>
+    Move,
+    /// <summary>攻撃</summary>
+    Attack,
 }
