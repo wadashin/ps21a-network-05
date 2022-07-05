@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!_view.IsMine) return;
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire2"))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
