@@ -91,6 +91,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ˆÚ“®æ‚ÌÀ•W‚ğİ’è‚·‚é
+    /// </summary>
     void PointSet()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
