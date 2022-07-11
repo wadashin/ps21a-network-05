@@ -12,11 +12,11 @@ public class SliderScript : MonoBehaviour
     Slider _slider;
   
     /// <summary>最大値</summary>
-    [SerializeField] float _maxValue = 100;
+    [Tooltip("最大値"),SerializeField] float _maxValue = 100;
     /// <summary>最小値</summary>
-    [SerializeField] float _minValue = 0;
+    [Tooltip("最小値"), SerializeField] float _minValue = 0;
     /// <summary>現在値</summary>
-    [SerializeField] float _currentValue;
+    [Tooltip("現在値"), SerializeField] float _currentValue;
 
     void Start()
     {
