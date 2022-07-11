@@ -27,11 +27,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Move();
         if (_base != null)
         {
             _base = GameObject.FindGameObjectWithTag("Base");
         }
+        Move();
 
     }
 
