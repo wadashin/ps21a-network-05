@@ -28,12 +28,17 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Move();
+        if (_base != null)
+        {
+            _base = GameObject.FindGameObjectWithTag("Base");
+        }
+
     }
 
     /// <summary> エネミー移動処理 </summary>
     private void Move()
     {
-        if(_base != null)
+        if (_base != null)
         {
             transform.LookAt(_base.transform);
             Vector3 sub = _base.transform.position - transform.position;
