@@ -10,7 +10,7 @@ public class EnemySpownManager : MonoBehaviour
     [SerializeField] Transform[] _spawPoint;
     void Start()
     {
-        StartCoroutine("EnemySpawnCoroutine");
+
     }
 
     // Update is called once per frame
