@@ -13,26 +13,33 @@ using ExitGames.Client.Photon;
 [RequireComponent(typeof(PhotonView), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    /// <summary>移動速度</summary>
+    [Tooltip("移動速度")]
     [SerializeField] float _moveSpeed = 6f;
-    /// <summary>攻撃速度</summary>
+    [Tooltip("攻撃速度")]
     [SerializeField] float _attackSpeed = 20f;
     [Tooltip("攻撃可能距離")]
     [SerializeField] float _attackLange = 10f;
-    /// <summary>クリック可能なレイヤー</summary>
+    [Tooltip("クリック可能なレイヤー")]
     [SerializeField] LayerMask _layerMask;
-    /// <summary>移動のためのレイキャストの距離</summary>
+    [Tooltip("移動のためのレイキャストの距離")]
     [SerializeField] float _raycastDistance = 20f;
-    /// <summary>ストップする目的地からの距離</summary>
+    [Tooltip("ストップする目的地からの距離")]
     [SerializeField] float _stoppingDistance = 1f;
     [Tooltip("ターゲットを示すオブジェクト")]
     [SerializeField] GameObject _targetObject;
+    [Tooltip("攻撃の最大ストック数")]
+    [SerializeField] int _maxAttackStock = 3;
+    [Tooltip("攻撃のクールタイム")]
+    [SerializeField] float _attackCoolTime = 1f;
+
     PhotonView _view;
     Rigidbody _rb;
     /// <summary>目的地の座標</summary>
     Vector3 _destination;
     /// <summary>プレイヤーの現在の状態</summary>
     PlayerState _state;
+    /// <summary>攻撃のストック数</summary>
+    int _attackStock = 0;
 
     void Start()
     {
@@ -99,6 +106,15 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        Move();
+
+    }
+
+    /// <summary>
+    /// プレイヤーを移動させる
+    /// </summary>
+    void Move()
+    {
         if (_state == PlayerState.Move || _state == PlayerState.Attack)
         {
             if (Vector3.Distance(transform.position, _destination) < _stoppingDistance)
@@ -145,6 +161,19 @@ public class PlayerController : MonoBehaviour
             return hit.point;
         }
         return transform.position;
+    }
+
+    /// <summary>
+    /// 攻撃のストックをチャージする
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AttackRecharge()
+    {
+        yield return _attackCoolTime;
+        if(_attackStock < _maxAttackStock)
+        {
+            _attackStock++;
+        }
     }
 
 }
