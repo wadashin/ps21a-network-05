@@ -16,8 +16,7 @@ public class Enemy : MonoBehaviour
     int _dropType;
     [SerializeField, Tooltip("ドロップアイテムの配列")]
     GameObject[] _drop = default;
-    [SerializeField, Tooltip("拠点")]
-    GameObject _base = default;
+    GameObject _base = default; //拠点オブジェクト
     Rigidbody _rb = default;
 
     void Start()
@@ -34,16 +33,17 @@ public class Enemy : MonoBehaviour
     /// <summary> エネミー移動処理 </summary>
     private void Move()
     {
-        transform.LookAt(_base.transform);
-        Vector3 sub = _base.transform.position - transform.position;
-        sub.Normalize();
+        if(_base != null)
+        {
+            transform.LookAt(_base.transform);
+            Vector3 sub = _base.transform.position - transform.position;
+            sub.Normalize();
+            transform.position += sub * _moveSpeed * Time.deltaTime;
+            Vector3 velocity = sub.normalized * _moveSpeed;
+            velocity.y = _rb.velocity.y;
+            _rb.velocity = velocity;
+        }
 
-        transform.position += sub * _moveSpeed * Time.deltaTime;
-
-
-        Vector3 velocity = sub.normalized * _moveSpeed;
-        velocity.y = _rb.velocity.y;
-        _rb.velocity = velocity;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -58,7 +58,10 @@ public class Enemy : MonoBehaviour
     /// <summary> エネミー死亡処理 </summary>
     private void Death()
     {
-        Instantiate(_drop[_dropType]);
+        if(_drop != null)
+        {
+            Instantiate(_drop[_dropType]);
+        }
         Destroy(this);
     }
 

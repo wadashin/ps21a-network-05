@@ -201,7 +201,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9529617, y: 1}
+    m_SensorSize: {x: 2.0769231, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -992,6 +992,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5340456045358876681, guid: bb20a81d8a6f8d34e90c9301e35cb9f3, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1040,25 +1044,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: bb20a81d8a6f8d34e90c9301e35cb9f3, type: 3}
---- !u!1 &453569469 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5340456045358876681, guid: bb20a81d8a6f8d34e90c9301e35cb9f3, type: 3}
-  m_PrefabInstance: {fileID: 453569468}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &453569470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 453569469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8f36bbc9b2d1c4ab26f6ee3b89f4cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &491566834
 GameObject:
   m_ObjectHideFlags: 0
