@@ -19,6 +19,7 @@
 -Event や delegat
 
 -Private 変数 (インスペクターに表示するもの)
+(コメントはsummaryの代わりにToolTipを使う)
 
 -Private 変数
 
