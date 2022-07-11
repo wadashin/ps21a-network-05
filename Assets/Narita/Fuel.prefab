@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6187581510155253409}
   - component: {fileID: 8411144825677045920}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Fuel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9487b8e95d845944b965395ca85cba1a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +93,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6811896021869604965}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -110,5 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2873253ca71dde34bb3aeaa399a671c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuel: 10
-  player: {fileID: 0}
+  _fuel: 10
+  player: {fileID: 1056063004716559996, guid: 149f771cc1793cf459576b9d77299635, type: 3}
