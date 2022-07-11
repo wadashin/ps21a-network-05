@@ -19,7 +19,7 @@
 -Event や delegat
 
 -Private 変数 (インスペクターに表示するもの)
-コメントはsamaryの代わりにToolTipを使う
+(コメントはsamaryの代わりにToolTipを使う)
 
 -Private 変数
 
