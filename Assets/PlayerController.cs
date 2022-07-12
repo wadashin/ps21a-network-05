@@ -5,6 +5,7 @@ using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// プレイヤーを操作するコンポーネント
@@ -40,6 +41,8 @@ public class PlayerController : MonoBehaviour
     PlayerState _state;
     /// <summary>攻撃のストック数</summary>
     int _attackStock = 0;
+    /// <summary>マウスの座標</summary>
+    Vector2 _mousePosition;
 
     void Start()
     {
@@ -71,40 +74,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!_view.IsMine) return;
-        if (Input.GetButtonUp("Fire2"))
-        {
-            _state = PlayerState.Move;
-            PointSet();
-        }
-        if (Input.GetButtonUp("Fire1"))
-        {
-            _state = PlayerState.Attack;
-            _targetObject.SetActive(false);
-        }
-        if (_state != PlayerState.Attack)
-        {
-            //if (Input.GetButtonDown("Fire1"))
-            //{
-            //}
-            if (Input.GetButton("Fire1"))
-            {
-                if (!_targetObject.activeSelf)
-                {
-                    _targetObject.SetActive(true);
-                }
-                Vector3 point = PointGet();
-                if (_targetObject)
-                {
-                    float dis = Vector3.Distance(transform.position, point);
-                    _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-                    _targetObject.transform.position = _destination;
-                }
-            }
-        }
-        if (Input.GetButton("Fire2"))
-        {
+        //if (Input.GetButtonUp("Fire2"))
+        //{
+        //    _state = PlayerState.Move;
+        //    PointSet();
+        //}
+        //if (Input.GetButtonUp("Fire1"))
+        //{
+        //}
+        //if (Input.GetButton("Fire2"))
+        //{
 
-        }
+        //}
 
         Move();
 
@@ -140,12 +121,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void PointSet()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
-        {
-            _destination = hit.point;
-        }
+        //if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
+        //{
+        //    _destination = hit.point;
+        //}
     }
 
     /// <summary>
@@ -154,7 +135,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     Vector3 PointGet()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay((Vector3) _mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
         {
@@ -170,11 +151,53 @@ public class PlayerController : MonoBehaviour
     IEnumerator AttackRecharge()
     {
         yield return _attackCoolTime;
-        if(_attackStock < _maxAttackStock)
+        if (_attackStock < _maxAttackStock)
         {
             _attackStock++;
         }
     }
+
+    void AttackAim()
+    {
+        if (_state != PlayerState.Attack)
+        {
+            if (!_targetObject.activeSelf)
+            {
+                _targetObject.SetActive(true);
+            }
+            Vector3 point = PointGet();
+            if (_targetObject)
+            {
+                float dis = Vector3.Distance(transform.position, point);
+                _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+                _targetObject.transform.position = _destination;
+            }
+        }
+    }
+
+    #region 入力受付部
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log(1);
+            AttackAim();
+        }
+        if (context.canceled)
+        {
+
+            _state = PlayerState.Attack;
+            _targetObject.SetActive(false);
+        }
+    }
+
+    public void OnMouse(InputAction.CallbackContext context)
+    {
+        _mousePosition = context.ReadValue<Vector2>();
+    }
+
+    #endregion
 
 }
 
