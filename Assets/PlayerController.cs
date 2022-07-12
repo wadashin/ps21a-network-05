@@ -157,9 +157,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AttackAim()
+    IEnumerator AttackAim()
     {
-        if (_state != PlayerState.Attack)
+        while (true)
         {
             if (!_targetObject.activeSelf)
             {
@@ -172,6 +172,7 @@ public class PlayerController : MonoBehaviour
                 _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
                 _targetObject.transform.position = _destination;
             }
+            yield return null;
         }
     }
 
@@ -179,9 +180,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        Debug.Log(context.phase);
         if (context.performed)
         {
-            Debug.Log(1);
             AttackAim();
         }
         if (context.canceled)
@@ -192,7 +193,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnMouse(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        
+    }
+
+    public void OnPoint(InputAction.CallbackContext context)
     {
         _mousePosition = context.ReadValue<Vector2>();
     }
