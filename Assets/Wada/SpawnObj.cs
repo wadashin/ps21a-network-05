@@ -16,7 +16,6 @@ public class SpawnObj : MonoBehaviour
     [SerializeField] GameObject cube1;
     [SerializeField] GameObject cube2;
 
-    [SerializeField] GameObject a;
 
     WaveManager waveManager;
 
@@ -35,7 +34,7 @@ public class SpawnObj : MonoBehaviour
         Gizmos.DrawLine(this.transform.position, cube2.transform.position);
     }
 
-    public void SpawnEnemy(GameObject x)
+    public void SpawnEnemy(Enemy x)
     {
         Vector3 y = cube1.transform.position + (cube2.transform.position - cube1.transform.position) * Random.Range(0, 1f);
         Instantiate(x, y, Quaternion.identity);
