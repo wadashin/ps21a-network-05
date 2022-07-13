@@ -5,12 +5,15 @@ using UnityEngine;
 public class EnemySpownManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    [Tooltip("プレハブ化したエネミー")]
     [SerializeField] GameObject _enemyPrefab;
-    [SerializeField] float _spawnTime= 1;
-    [SerializeField] Transform[] _spawPoint;
+    [Tooltip("敵が生成される間隔")]
+    [SerializeField] float _spawnTime = 1;
+    [Tooltip("敵が生成される座標の配列")]
+    [SerializeField] Transform[] _spawPoint = default;
     void Start()
     {
-
+        StartCoroutine("EnemySpawnCoroutine");
     }
 
     // Update is called once per frame
@@ -23,6 +26,11 @@ public class EnemySpownManager : MonoBehaviour
     {
         int random = Random.Range(0,_spawPoint.Length);
         Instantiate(_enemyPrefab, _spawPoint[random].transform.position, Quaternion.identity);
+    }
+
+    public void SpawnCoroutineStart()
+    {
+
     }
 
     IEnumerator EnemySpawnCoroutine()
