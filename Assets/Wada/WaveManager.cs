@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 
@@ -10,16 +11,18 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] GameObject _enemy;
 
+    [SerializeField] float _spawn = 1;
 
     void Start()
     {
         StartCoroutine(A());
     }
 
-    void Update()
+    private void Update()
     {
-
+        
     }
+
 
     IEnumerator A()
     {
@@ -27,9 +30,19 @@ public class WaveManager : MonoBehaviour
         {
             if (spawnObjs.Count > 0)
             {
-                spawnObjs[Random.Range(0, spawnObjs.Count)].SpawnEnemy(_enemy);
+                float allRange = spawnObjs.Sum(x => x.Range);
+                float randomRange =  Random.Range(0, allRange);
+                for(int i = 0; i < spawnObjs.Count; i++)
+                {
+                    randomRange -= spawnObjs[i].Range;
+                    if (randomRange <= 0)
+                    {
+                        spawnObjs[i].SpawnEnemy(_enemy);
+                        break;
+                    }
+                }
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(_spawn);
         }
     }
 }

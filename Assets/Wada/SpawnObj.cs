@@ -5,6 +5,13 @@ using UnityEngine;
 public class SpawnObj : MonoBehaviour
 {
     [SerializeField] float _spawnPos;
+    public float Range
+    {
+        get
+        {
+            return this._spawnPos * 2;
+        }
+    }
 
     [SerializeField] GameObject cube1;
     [SerializeField] GameObject cube2;
@@ -13,22 +20,10 @@ public class SpawnObj : MonoBehaviour
 
     WaveManager waveManager;
 
-    void Start()
-    {
-        
-    }
-
     private void Awake()
     {
         WaveManager.spawnObjs.Add(this);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void OnDrawGizmosSelected()
     {
