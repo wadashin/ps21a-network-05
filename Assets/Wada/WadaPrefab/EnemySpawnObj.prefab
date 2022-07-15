@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPos: 4.49
-  cube1: {fileID: 617192241030632443}
-  cube2: {fileID: 617192241925514772}
+  cube1: {fileID: 617192241030632440}
+  cube2: {fileID: 617192241925514773}
 --- !u!1 &617192241030632443
 GameObject:
   m_ObjectHideFlags: 0

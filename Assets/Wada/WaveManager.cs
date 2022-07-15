@@ -15,15 +15,43 @@ public class WaveManager : MonoBehaviour
     [Tooltip("敵を生成する間隔")]
     [SerializeField] float _spawnTime = 1;
 
-    void Start()
+    [Tooltip("とりあえずのウェーブとインターバルの長さ(今後デザイン予定)")]
+    [SerializeField] float setTime = 10;
+
+    float time = 0;//ウェーブ開始時はこいつをゼロにする
+    
+
+    /// <summary> _spawnTimeのプロパティ  </summary>
+    public float SpawnTime
     {
-        StartCoroutine(A());
+        get { return _spawnTime; }
+        set { _spawnTime = value; }
     }
 
+
+    private void Start()
+    {
+        time = setTime;
+    }
     private void Update()
     {
-        
+        if(time < setTime)
+        {
+            time += Time.deltaTime;
+        }
     }
+
+    public void WaveStart()
+    {
+        StartCoroutine(A());
+        time = 0;
+    }
+    public void IntervalStart()
+    {
+        StopCoroutine(A());
+        time = 0;
+    }
+
 
     /// <summary>各敵生成地点の長さに応じてランダムな場所に敵を生成</summary>
     IEnumerator A()
