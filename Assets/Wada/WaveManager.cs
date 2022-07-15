@@ -9,9 +9,11 @@ public class WaveManager : MonoBehaviour
 {
     public static List<SpawnObj> spawnObjs = new List<SpawnObj>();
 
+    [Tooltip("¶¬‚·‚é“GƒvƒŒƒnƒu")]
     [SerializeField] Enemy _enemy;
 
-    [SerializeField] float _spawn = 1;
+    [Tooltip("“G‚ğ¶¬‚·‚éŠÔŠu")]
+    [SerializeField] float _spawnTime = 1;
 
     void Start()
     {
@@ -22,10 +24,8 @@ public class WaveManager : MonoBehaviour
     {
         
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
+    /// <summary>Še“G¶¬’n“_‚Ì’·‚³‚É‰‚¶‚Äƒ‰ƒ“ƒ_ƒ€‚ÈêŠ‚É“G‚ğ¶¬</summary>
     IEnumerator A()
     {
         for (; ; )
@@ -44,7 +44,7 @@ public class WaveManager : MonoBehaviour
                     }
                 }
             }
-            yield return new WaitForSeconds(_spawn);
+            yield return new WaitForSeconds(_spawnTime);
         }
     }
 }

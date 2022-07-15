@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnObj : MonoBehaviour
 {
+    [Tooltip("ìGÇê∂ê¨Ç∑ÇÈîÕàÕ")]
     [SerializeField] float _spawnPos;
     public float Range
     {
@@ -13,8 +14,10 @@ public class SpawnObj : MonoBehaviour
         }
     }
 
-    [SerializeField] GameObject cube1;
-    [SerializeField] GameObject cube2;
+    [Tooltip("ìGê∂ê¨îÕàÕÇÃí[1")]
+    [SerializeField] Transform cube1;
+    [Tooltip("ìGê∂ê¨îÕàÕÇÃí[2")]
+    [SerializeField] Transform cube2;
 
 
     WaveManager waveManager;
@@ -26,17 +29,17 @@ public class SpawnObj : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        cube1.transform.position = transform.position + transform.right * _spawnPos;
-        cube2.transform.position = transform.position + transform.right * -_spawnPos;
+        cube1.position = transform.position + transform.right * _spawnPos;
+        cube2.position = transform.position + transform.right * -_spawnPos;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(this.transform.position, cube1.transform.position);
-        Gizmos.DrawLine(this.transform.position, cube2.transform.position);
+        Gizmos.DrawLine(this.transform.position, cube1.position);
+        Gizmos.DrawLine(this.transform.position, cube2.position);
     }
 
     public void SpawnEnemy(Enemy x)
     {
-        Vector3 y = cube1.transform.position + (cube2.transform.position - cube1.transform.position) * Random.Range(0, 1f);
+        Vector3 y = cube1.position + (cube2.position - cube1.position) * Random.Range(0, 1f);
         Instantiate(x, y, Quaternion.identity);
     }
 }
