@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawnObj
       objectReference: {fileID: 0}
+    - target: {fileID: 617192241030632440, guid: 1590f5aff0f9bd841b24b874661d7ce9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.49
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1590f5aff0f9bd841b24b874661d7ce9, type: 3}
 --- !u!1 &1752459061
@@ -516,6 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemy: {fileID: 304515026569322497, guid: bb20a81d8a6f8d34e90c9301e35cb9f3, type: 3}
   _spawnTime: 1
+  setTime: 10
 --- !u!1 &2128655258
 GameObject:
   m_ObjectHideFlags: 0
