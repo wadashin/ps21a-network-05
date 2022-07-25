@@ -54,10 +54,23 @@ public class PlayerController : MonoBehaviour
         {
             _rb = GetComponent<Rigidbody>();
             _destination = transform.position;
+            if (!_attackTargetObject)
+            {
+                _attackTargetObject = new GameObject();
+                _attackTargetObject.name = nameof(_attackTargetObject);
+                Debug.LogWarning($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+            }
             _attackTargetObject = Instantiate(_attackTargetObject);
-            _moveTargetObject = Instantiate(_moveTargetObject);
-            _rb.transform.position = _destination;
             _attackTargetObject.SetActive(false);
+            if (!_moveTargetObject)
+            {
+                _moveTargetObject = new GameObject();
+                _moveTargetObject.name = nameof(_moveTargetObject);
+                Debug.LogWarning($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+            }
+            _moveTargetObject = Instantiate(_moveTargetObject);
+            _moveTargetObject.SetActive(false);
+            _rb.transform.position = _destination;
             // カメラをセットアップする
             var vcam = FindObjectOfType<CinemachineVirtualCameraBase>();
             vcam.LookAt = transform;
@@ -172,12 +185,6 @@ public class PlayerController : MonoBehaviour
                 _attackTargetObject.SetActive(false);
                 yield break;
             }
-            if (!_attackTargetObject)
-            {
-                _attackTargetObject = new GameObject();
-                _attackTargetObject.name = nameof(_attackTargetObject);
-                Debug.LogError($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
-            }
             if (!_attackTargetObject.activeSelf)
             {
                 _attackTargetObject.SetActive(true);
@@ -203,12 +210,6 @@ public class PlayerController : MonoBehaviour
             {
                 _moveTargetObject.SetActive(false);
                 yield break;
-            }
-            if (!_moveTargetObject)
-            {
-                _moveTargetObject = new GameObject();
-                _moveTargetObject.name = nameof(_moveTargetObject);
-                Debug.LogError($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
             }
             if (!_moveTargetObject.activeSelf)
             {
