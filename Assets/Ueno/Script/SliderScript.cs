@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,25 +7,31 @@ using UnityEngine.UI;
 
 public class SliderScript : MonoBehaviour
 {
-    Slider _slider;
-  
-    /// <summary>最大値</summary>
-    [Tooltip("最大値"),SerializeField] float _maxValue = 100;
-    /// <summary>最小値</summary>
-    [Tooltip("最小値"), SerializeField] float _minValue = 0;
-    /// <summary>現在値</summary>
-    [Tooltip("現在値"), SerializeField] float _currentValue;
+    private Slider _slider;
+    private bool isSettingValue = false;
 
-    void Start()
+    private void Start()
     {
         _slider = GetComponent<Slider>();
-        _slider.maxValue = _maxValue;
-        _slider.minValue = _minValue;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Baseの位置をスライダーと同期させて動かす処理
+    /// </summary>
+    /// <param name="distance">道のり,DollyTrackのPath Lengthの値</param>
+    /// <param name="currentValue">Baseの地点,DollyCartのposition</param>
+    public void UpdateSlider(float distance,float currentValue)
     {
-        _slider.value = _currentValue;
+        if (_slider != null)
+        {
+            if (!isSettingValue)
+            {
+                _slider.maxValue = distance;
+                isSettingValue = true;
+            }
+
+            _slider.value = currentValue;
+        
+        }
     }
 }
