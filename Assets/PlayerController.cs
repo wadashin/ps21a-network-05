@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _raycastDistance = 20f;
     [Tooltip("ストップする目的地からの距離")]
     [SerializeField] float _stoppingDistance = 1f;
-    [Tooltip("ターゲットを示すオブジェクト")]
-    [SerializeField] GameObject _targetObject;
+    [Tooltip("攻撃ターゲットを示すオブジェクト")]
+    [SerializeField] GameObject _attackTargetObject;
+    [Tooltip("通常移動先を示すオブジェクト")]
+    [SerializeField] GameObject _moveTargetObject;
     [Tooltip("攻撃の最大ストック数")]
     [SerializeField] int _maxAttackStock = 3;
     [Tooltip("攻撃のクールタイム")]
@@ -49,9 +51,9 @@ public class PlayerController : MonoBehaviour
         _view = GetComponent<PhotonView>();
         _rb = GetComponent<Rigidbody>();
         _destination = transform.position;
-        _targetObject = Instantiate(_targetObject);
+        _attackTargetObject = Instantiate(_attackTargetObject);
         _rb.transform.position = _destination;
-        _targetObject.SetActive(false);
+        _attackTargetObject.SetActive(false);
 
         if (_view.IsMine)
         {
@@ -134,7 +136,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     Vector3 PointGet()
     {
-        var ray = Camera.main.ScreenPointToRay((Vector3) _mousePosition);
+        var ray = Camera.main.ScreenPointToRay((Vector3)_mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _layerMask))
         {
@@ -168,18 +170,46 @@ public class PlayerController : MonoBehaviour
             {
                 yield break;
             }
-            if (!_targetObject.activeSelf)
+            if (!_attackTargetObject.activeSelf)
             {
-                _targetObject.SetActive(true);
+                _attackTargetObject.SetActive(true);
             }
             Vector3 point = PointGet();
-            if (_targetObject)
+            if (_attackTargetObject)
             {
                 float dis = Vector3.Distance(transform.position, point);
                 _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-                _targetObject.transform.position = _destination;
+                _attackTargetObject.transform.position = _destination;
             }
             yield return null;
+        }
+    }
+
+
+    /// <summary>
+    /// 通常移動時の移動先を指定する
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MoveAim()
+    {
+        while (true)
+        {
+            if (_state == PlayerState.Move)
+            {
+                _moveTargetObject.SetActive(false);
+                yield break;
+            }
+            if (!_moveTargetObject)
+            {
+                _moveTargetObject = new GameObject();
+                _moveTargetObject.name = nameof(_moveTargetObject);
+                Debug.LogError($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+            }
+            if (!_moveTargetObject.activeSelf)
+            {
+                _moveTargetObject.SetActive(true);
+            }
+            _moveTargetObject.transform.position = PointGet();
         }
     }
 
@@ -198,7 +228,7 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             _state = PlayerState.Attack;
-            _targetObject.SetActive(false);
+            _attackTargetObject.SetActive(false);
         }
     }
 
@@ -208,7 +238,14 @@ public class PlayerController : MonoBehaviour
     /// <param name="context"></param>
     public void OnMove(InputAction.CallbackContext context)
     {
-        
+        if (context.started)
+        {
+            StartCoroutine(MoveAim());
+        }
+        if (context.canceled)
+        {
+            _state = PlayerState.Move;
+        }
     }
 
     /// <summary>
