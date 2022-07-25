@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript4 : MonoBehaviour
+/// <summary>
+/// Player‚Ìó‹µ‚ğŠÄ‹‚·‚éScript
+/// </summary>
+public class PlayerStateManager : MonoBehaviour
 {
+    [SerializeField] GameObject[] _player;
+    [SerializeField] State[] _playersState;
     // Start is called before the first frame update
     void Start()
     {
