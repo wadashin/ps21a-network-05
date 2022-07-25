@@ -2103,7 +2103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872d621f2a0500646839e38b89f07d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefabName: Player
+  _playerPrefabName: Player 1
   _spawnPositions:
   - {fileID: 243479782}
   - {fileID: 494290256}

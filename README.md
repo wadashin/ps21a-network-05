@@ -1,36 +1,21 @@
-## 命名規則・注意点
+## 命名規則
 
-・コミット時わかりやすくする為に　**追加**　**変更**　**削除**　などを内容の前に頭につける
-
-・**Masterブランチには原則コミットしない**
-
-<sub> 個人のブランチで作業する</sub>	
+・変数名の頭には_をつける
 
 ・関数やフィールド変数ごとにsummaryをつけてコメントを作成。
 
 ・複雑なループ処理や条件式があれば適度にコメントを残す。
 
-・宣言の順番について
+・インスペクターから設定すできる値には[Tooltip]をつけ、変数の用途や入れる値を書く
 
--Private Static変数
+[例](https://github.com/wadashin/ps21a-network-05/blob/Wada/Assets/Wada/EnemySpownManager.cs)
 
--Public Static変数
 
--Event や delegat
+・コミット時わかりやすくする為に　**追加**　**変更**　**削除**　などを内容の前に頭につける
 
--Private 変数 (インスペクターに表示するもの)
-(コメントはsummaryの代わりにToolTipを使う)
+## 注意点
+・**Masterブランチには原則コミットしない**
 
--Private 変数
-
--Public 変数
-
--Public プロパティ
-
--Unity既存関数(Startなど)
-
--Private 関数
-
--Public 関数
+・**個人のブランチで作業する**
 
 ![README](https://user-images.githubusercontent.com/4126881/177043843-485f269e-3450-45ff-8b5a-1ce81ac3cf03.jpg)
