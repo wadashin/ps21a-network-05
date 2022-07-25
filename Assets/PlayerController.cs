@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _destination = transform.position;
         _attackTargetObject = Instantiate(_attackTargetObject);
+        _moveTargetObject = Instantiate(_moveTargetObject);
         _rb.transform.position = _destination;
         _attackTargetObject.SetActive(false);
 
@@ -171,17 +172,20 @@ public class PlayerController : MonoBehaviour
                 _attackTargetObject.SetActive(false);
                 yield break;
             }
+            if (!_attackTargetObject)
+            {
+                _attackTargetObject = new GameObject();
+                _attackTargetObject.name = nameof(_attackTargetObject);
+                Debug.LogError($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+            }
             if (!_attackTargetObject.activeSelf)
             {
                 _attackTargetObject.SetActive(true);
             }
             Vector3 point = PointGet();
-            if (_attackTargetObject)
-            {
-                float dis = Vector3.Distance(transform.position, point);
-                _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-                _attackTargetObject.transform.position = _destination;
-            }
+            float dis = Vector3.Distance(transform.position, point);
+            _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+            _attackTargetObject.transform.position = _destination;
             yield return null;
         }
     }
@@ -209,8 +213,10 @@ public class PlayerController : MonoBehaviour
             if (!_moveTargetObject.activeSelf)
             {
                 _moveTargetObject.SetActive(true);
+                Debug.Log(2);
             }
-            _moveTargetObject.transform.position = PointGet();
+            _destination = PointGet();
+            _moveTargetObject.transform.position = _destination;
             yield return null;
         }
     }
@@ -241,6 +247,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            Debug.Log(1);
             StartCoroutine(MoveAim());
         }
         if (context.canceled)

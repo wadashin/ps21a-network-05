@@ -61,7 +61,8 @@ MonoBehaviour:
     m_Bits: 8
   _raycastDistance: 100
   _stoppingDistance: 1
-  _targetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
+  _attackTargetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
+  _moveTargetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
   _maxAttackStock: 3
   _attackCoolTime: 1
 --- !u!114 &8960828197209621867
@@ -1071,7 +1072,19 @@ MonoBehaviour:
     m_ActionId: ae0fc8ad-74f1-41df-be81-a380dd50e738
     m_ActionName: Player/Point[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8960828197209621877}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fb3bb9bd-4f5f-4382-a8a7-26cbe89807af
     m_ActionName: Player/Move[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
