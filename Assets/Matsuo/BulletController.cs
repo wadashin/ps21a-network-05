@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BulletController : MonoBehaviour
@@ -39,11 +40,20 @@ public class BulletController : MonoBehaviour
 
         if (collision.gameObject.tag == "Base")
         {
-            collision.gameObject.GetComponent<Enemy>().GetDamage(_atk);
-            //Destroy(this.gameObject);
+            CallDamage(collision);
+            Destroy(this.gameObject);
             //GameObject effect = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
             //Destroy(effect, 1.0f);
         };
+    }
+
+    void CallDamage(Collision collider)
+    {
+        //↓に拠点のダメージ処理があるスクリプトを指定
+        //if(collider.gameObject.GetComponent<>().GetDamage())
+        //{
+        //    //collider.gameObject.GetComponent<>().GetDamage(_atk);
+        //}
     }
 
 }

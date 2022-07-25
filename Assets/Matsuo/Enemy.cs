@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField, Tooltip("移動速度")]
-    float _moveSpeed;
+    float _moveSpeed = 1;
     [SerializeField, Tooltip("最大体力")]
-    int _maxHp;
+    int _maxHp = 100;
     [SerializeField, Tooltip("現在体力")]
-    int _hp;
+    int _hp = 0;
     [SerializeField, Tooltip("攻撃力")]
-    int _atk;
+    int _atk = 1;
     [SerializeField, Tooltip("ドロップアイテムの種類（配列の要素）")]
-    int _dropType;
+    int _dropType = 0;
     [SerializeField, Tooltip("ドロップアイテムの配列")]
     GameObject[] _drop = default;
     GameObject _base = default; //拠点オブジェクト
@@ -55,19 +56,33 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Base")
         {
-            //↓に拠点のダメージ処理があるスクリプトを指定
-            //collision.gameObject.GetComponent<PlayerState>().GetDamage(_atk);
+
+            CallDamage(collision);
         }
+    }
+
+    /// <summary>
+    /// 拠点のダメージ関数呼び出し処理
+    /// </summary>
+    /// <param name="collider"></param>
+    void CallDamage(Collision collider)
+    {
+        //↓に拠点のダメージ処理があるスクリプトを指定
+        //if(collider.gameObject.GetComponent<>().GetDamage())
+        //{
+        //    //collider.gameObject.GetComponent<>().GetDamage(_atk);
+        //}
     }
 
     /// <summary> エネミー死亡処理 </summary>
     private void Death()
     {
-        if(_drop != null)
+        if(_drop[_dropType] != null)
         {
             Instantiate(_drop[_dropType]);
         }
-        Destroy(this);
+        //Destroy(this);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     /// <summary> エネミーダメージ処理 </summary>
