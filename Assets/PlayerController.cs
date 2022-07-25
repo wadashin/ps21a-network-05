@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
             {
                 _attackTargetObject = new GameObject();
                 _attackTargetObject.name = nameof(_attackTargetObject);
-                Debug.LogWarning($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+                Debug.LogWarning($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを使用します");
             }
             _attackTargetObject = Instantiate(_attackTargetObject);
             _attackTargetObject.SetActive(false);
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
             {
                 _moveTargetObject = new GameObject();
                 _moveTargetObject.name = nameof(_moveTargetObject);
-                Debug.LogWarning($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
+                Debug.LogWarning($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを使用します");
             }
             _moveTargetObject = Instantiate(_moveTargetObject);
             _moveTargetObject.SetActive(false);
