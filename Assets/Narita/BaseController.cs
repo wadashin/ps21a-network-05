@@ -82,9 +82,9 @@ public class BaseController : MonoBehaviour
     public void GetDamage(int damage)
     {
         _hpbar.maxValue -= damage;
-        Debug.Log(damage + " ダメージを受けて拠点のHPが " + _life + " になった！");
+        Debug.Log(damage + " ダメージを受けて拠点のHPが " + _hpbar.maxValue + " になった！");
 
-        if (_life <= 0)
+        if (_hpbar.maxValue <= 0)
         {
             Death();
         }
