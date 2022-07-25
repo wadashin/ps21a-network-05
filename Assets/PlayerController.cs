@@ -49,15 +49,15 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _view = GetComponent<PhotonView>();
-        _rb = GetComponent<Rigidbody>();
-        _destination = transform.position;
-        _attackTargetObject = Instantiate(_attackTargetObject);
-        _moveTargetObject = Instantiate(_moveTargetObject);
-        _rb.transform.position = _destination;
-        _attackTargetObject.SetActive(false);
 
         if (_view.IsMine)
         {
+            _rb = GetComponent<Rigidbody>();
+            _destination = transform.position;
+            _attackTargetObject = Instantiate(_attackTargetObject);
+            _moveTargetObject = Instantiate(_moveTargetObject);
+            _rb.transform.position = _destination;
+            _attackTargetObject.SetActive(false);
             // カメラをセットアップする
             var vcam = FindObjectOfType<CinemachineVirtualCameraBase>();
             vcam.LookAt = transform;
