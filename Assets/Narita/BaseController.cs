@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,16 @@ using ExitGames.Client.Photon;
 /// Cinemachine の Dolly Cart に沿って動く
 /// fuel がなくなったら止まる
 /// </summary>
-public class BasementController : MonoBehaviour
+public class BaseController : MonoBehaviour
 {
+    /// <summary>燃料の最大値</summary>
+    private float _maxfuel = 100f;
+    /// <summary>残りの燃料</summary>
+    [SerializeField] public float _fuel = 100f;
+    /// <summary>残りのライフ</summary>
+    [SerializeField] private float _life = 100f;
     /// <summary>動く速さ</summary>
     [SerializeField] float _speed = 2f;
-    /// <summary>残りの燃料</summary>
-    [SerializeField] float _fuel = 100f;
-    [SerializeField] float _life = 100f;
     /// <summary>燃料が減る速さ</summary>
     [SerializeField] float _fuelReductionSpeed = 1f;
     /// <summary>燃料を表示する UI</summary>
@@ -26,10 +30,13 @@ public class BasementController : MonoBehaviour
     [SerializeField] Slider _hpbar = null;
     PhotonView _view;
     CinemachineDollyCart _cart;
+    /// <summary>_fuelを持つ</summary>
     float _lastFuel;
 
+    public float _Fuel { get => _fuel; set => _fuel = value; }
     void Start()
     {
+        _hpbar.maxValue = _life;
         _view = GetComponent<PhotonView>();
         
         if (_view.IsMine)
@@ -48,6 +55,10 @@ public class BasementController : MonoBehaviour
         {
             _cart.m_Position += _speed * Time.deltaTime;
         }
+        else if(_fuel > _maxfuel)//プレイヤーから補充した燃料がbaseの持つ燃料の最大値を超えた場合。
+        {
+            _fuel = _maxfuel;
+        }
         else
         {
             _fuel = 0;
@@ -55,7 +66,7 @@ public class BasementController : MonoBehaviour
 
         if (Mathf.Abs(_fuel - _lastFuel) > Mathf.Epsilon)
         {
-            object[] parameters = { _fuel };
+            object[] parameters = { _Fuel };
             _view.RPC(nameof(UpdateFuel), RpcTarget.All, parameters);
         }
 
@@ -66,5 +77,21 @@ public class BasementController : MonoBehaviour
     void UpdateFuel(float fuel)
     {
         _fuelText.text = fuel.ToString("F2");
+    }
+
+    public void GetDamage(int damage)
+    {
+        _hpbar.maxValue -= damage;
+        Debug.Log(damage + " ダメージを受けて拠点のHPが " + _life + " になった！");
+
+        if (_life <= 0)
+        {
+            Death();
+        }
+    }
+
+    private void Death()
+    {
+
     }
 }
