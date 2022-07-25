@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_state == PlayerState.Attack)
             {
+                _attackTargetObject.SetActive(false);
                 yield break;
             }
             if (!_attackTargetObject.activeSelf)
@@ -210,6 +211,7 @@ public class PlayerController : MonoBehaviour
                 _moveTargetObject.SetActive(true);
             }
             _moveTargetObject.transform.position = PointGet();
+            yield return null;
         }
     }
 
@@ -228,7 +230,6 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             _state = PlayerState.Attack;
-            _attackTargetObject.SetActive(false);
         }
     }
 
