@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour
         //{
 
         //}
-
         Move();
 
     }
@@ -157,10 +156,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// アタック時の移動先を指定する
+    /// </summary>
+    /// <returns></returns>
     IEnumerator AttackAim()
     {
         while (true)
         {
+            if (_state == PlayerState.Attack)
+            {
+                yield break;
+            }
             if (!_targetObject.activeSelf)
             {
                 _targetObject.SetActive(true);
@@ -178,26 +185,36 @@ public class PlayerController : MonoBehaviour
 
     #region 入力受付部
 
+    /// <summary>
+    /// 攻撃キー入力
+    /// </summary>
+    /// <param name="context"></param>
     public void OnAttack(InputAction.CallbackContext context)
     {
-        Debug.Log(context.phase);
-        if (context.performed)
+        if (context.started)
         {
-            AttackAim();
+            StartCoroutine(AttackAim());
         }
         if (context.canceled)
         {
-
             _state = PlayerState.Attack;
             _targetObject.SetActive(false);
         }
     }
 
+    /// <summary>
+    /// 移動キー入力
+    /// </summary>
+    /// <param name="context"></param>
     public void OnMove(InputAction.CallbackContext context)
     {
         
     }
 
+    /// <summary>
+    /// ポインター座標入力
+    /// </summary>
+    /// <param name="context"></param>
     public void OnPoint(InputAction.CallbackContext context)
     {
         _mousePosition = context.ReadValue<Vector2>();

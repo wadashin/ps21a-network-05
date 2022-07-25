@@ -1058,7 +1058,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8960828197209621877}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnMouse
+        m_MethodName: OnPoint
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
