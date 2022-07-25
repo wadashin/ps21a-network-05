@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8960828197209621866}
-  - component: {fileID: 8960828197209621877}
   - component: {fileID: 8960828197209621867}
   - component: {fileID: 8960828197209621864}
   - component: {fileID: 8960828197209621865}
@@ -19,6 +18,7 @@ GameObject:
   - component: {fileID: 8960828197209621869}
   - component: {fileID: 8960828197209621858}
   - component: {fileID: 1056063004716559996}
+  - component: {fileID: 9155731051634545229}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -41,27 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8960828197209621877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8960828197209621859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3833cc268bf438e4795c701335b86d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 6
-  _attackSpeed: 20
-  _attackLange: 10
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _raycastDistance: 100
-  _stoppingDistance: 1
-  _targetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
 --- !u!114 &8960828197209621867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,3 +1004,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hold: 0
   fuel: {fileID: 6811896021869604965, guid: 8d5eb4358e75323428ba2acfa7e6e5f5, type: 3}
+--- !u!114 &9155731051634545229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960828197209621859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3833cc268bf438e4795c701335b86d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 6
+  _attackSpeed: 20
+  _attackLange: 10
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _raycastDistance: 20
+  _stoppingDistance: 1
+  _attackTargetObject: {fileID: 2858352377297888357, guid: c51c24a56e7dd5f44822fbd76b06bbd1, type: 3}
+  _moveTargetObject: {fileID: 3368544044859276717, guid: 9979f308b903da449bad0ef754370274, type: 3}
+  _maxAttackStock: 3
+  _attackCoolTime: 1

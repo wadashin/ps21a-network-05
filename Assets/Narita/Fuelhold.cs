@@ -9,10 +9,10 @@ public class Fuelhold : MonoBehaviour
     [SerializeField] public int _hold = 0;
     /// <summary>燃料</summary>
     [SerializeField] GameObject fuel = null;
-    /// <summary>Baseの親オブジェクト</summary>
-    GameObject _baseparent = null;
-    /// <summary>Base自身</summary>
- 　　BaseController _base = null;
+    /// <summary>Baseの親</summary>
+ 　　GameObject _baseparent = null;
+    /// <summary>Base</summary>
+    BaseController _base = null;
     bool cheak = false;
     public int Holdfuel {
         get
@@ -32,12 +32,16 @@ public class Fuelhold : MonoBehaviour
         Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log(Holdfuel);
     }
+    /// <summary>StartでBase自体を確保出来ないためここで確保する</summary>
     private void Update()
     {
         if (!cheak)
         {
-            _base = _baseparent.GetComponentInChildren<BaseController>();
-            cheak = true;
+            if (_baseparent.transform.childCount == 1)
+            {
+                _base = _baseparent.GetComponentInChildren<BaseController>();
+                cheak = true;
+            }
         }
     }
     /// <summary>BasementControllerにholdfuelの値を渡す</summary>
