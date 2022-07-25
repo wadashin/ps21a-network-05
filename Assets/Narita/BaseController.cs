@@ -27,6 +27,7 @@ public class BaseController : MonoBehaviour
     [SerializeField] float _fuelReductionSpeed = 1f;
     /// <summary>燃料を表示する UI</summary>
     [SerializeField] Text _fuelText;
+    [SerializeField] Slider _hpbar = null;
     PhotonView _view;
     CinemachineDollyCart _cart;
     /// <summary>_fuelを持つ</summary>
@@ -35,6 +36,7 @@ public class BaseController : MonoBehaviour
     public float _Fuel { get => _fuel; set => _fuel = value; }
     void Start()
     {
+        _hpbar.maxValue = _life;
         _view = GetComponent<PhotonView>();
         
         if (_view.IsMine)
@@ -79,7 +81,7 @@ public class BaseController : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-        _life -= damage;
+        _hpbar.maxValue -= damage;
         Debug.Log(damage + " ダメージを受けて拠点のHPが " + _life + " になった！");
 
         if (_life <= 0)

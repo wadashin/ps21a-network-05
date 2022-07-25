@@ -23,6 +23,7 @@ public class BasementController : MonoBehaviour
     [SerializeField] float _fuelReductionSpeed = 1f;
     /// <summary>”R—¿‚ð•\Ž¦‚·‚é UI</summary>
     [SerializeField] Text _fuelText;
+    [SerializeField] Slider _hpbar = null;
     PhotonView _view;
     CinemachineDollyCart _cart;
     float _lastFuel;
