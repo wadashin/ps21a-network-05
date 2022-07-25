@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         time = setTime;
+        WaveStart();
     }
     private void Update()
     {
