@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
+
 
 public class SpawnObj : MonoBehaviour
 {
@@ -37,9 +41,10 @@ public class SpawnObj : MonoBehaviour
         Gizmos.DrawLine(this.transform.position, cube2.position);
     }
 
-    public void SpawnEnemy(Enemy x)
+    public void SpawnEnemy(Enemy enemy)
     {
         Vector3 y = cube1.position + (cube2.position - cube1.position) * Random.Range(0, 1f);
-        Instantiate(x, y, Quaternion.identity);
+        Instantiate(enemy, y, Quaternion.identity);
+        //PhotonNetwork.Instantiate(enemy, y, Quaternion.identity);
     }
 }

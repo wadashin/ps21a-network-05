@@ -60,18 +60,10 @@ MonoBehaviour:
     m_Bits: 8
   _raycastDistance: 100
   _stoppingDistance: 1
-  _targetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
+  _attackTargetObject: {fileID: 0}
+  _moveTargetObject: {fileID: 0}
   _maxAttackStock: 3
   _attackCoolTime: 1
-  _action:
-    m_Name: Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 7c1467fb-2800-45d4-a6e2-4b6fe7d78576
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!114 &8960828197209621867
 MonoBehaviour:
   m_ObjectHideFlags: 0
