@@ -1024,5 +1024,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hold: 0
-  _base: {fileID: 311952030306151450, guid: f7618f51f62e5f4428b7bc54ae7bd813, type: 3}
   fuel: {fileID: 6811896021869604965, guid: 8d5eb4358e75323428ba2acfa7e6e5f5, type: 3}

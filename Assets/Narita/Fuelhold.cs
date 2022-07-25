@@ -7,10 +7,13 @@ public class Fuelhold : MonoBehaviour
     /// <summary>playerが取った燃料の値</summary>
     [Tooltip("プレイヤーが取った燃料の値")]
     [SerializeField] public int _hold = 0;
-    [SerializeField,Tooltip("baseをセット")]
-    BaseController _base = null;
-    [SerializeField]
-    GameObject fuel = null;
+    /// <summary>燃料</summary>
+    [SerializeField] GameObject fuel = null;
+    /// <summary>Baseの親オブジェクト</summary>
+    GameObject _baseparent = null;
+    /// <summary>Base自身</summary>
+ 　　BaseController _base = null;
+    bool cheak = false;
     public int Holdfuel {
         get
         {
@@ -25,16 +28,24 @@ public class Fuelhold : MonoBehaviour
     }
     private void Start()
     {
+        _baseparent = GameObject.FindGameObjectWithTag("Base");
         Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity);
         Debug.Log(Holdfuel);
-
+    }
+    private void Update()
+    {
+        if (!cheak)
+        {
+            _base = _baseparent.GetComponentInChildren<BaseController>();
+            cheak = true;
+        }
     }
     /// <summary>BasementControllerにholdfuelの値を渡す</summary>
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Port"))
         {
-            _base._Fuel += this.Holdfuel;
+            _base._Fuel += _hold;
             Debug.Log(" 回復して拠点の燃料が " + _base._Fuel + " になった！");
             _hold = 0;
         }

@@ -11,7 +11,6 @@ public class Fuelcontroller : MonoBehaviour
     Fuelhold player = null;
     private void Start()
     {
-        player = GameObject.Find("Player1(Clone)").GetComponent<Fuelhold>();
         Debug.Log($"_fuel: {_fuel}");
     }
     /// <summary>player‚É”R—¿‚Ì’l‚ğ“n‚·</summary>
@@ -19,6 +18,7 @@ public class Fuelcontroller : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            player = other.gameObject.GetComponent<Fuelhold>();
             player.Holdfuel += _fuel;
             Debug.Log("player‚ª‚Â”R—¿‚Ì’l‚ª" + player.Holdfuel + "‚É‚È‚Á‚½");
             Destroy(this.gameObject);

@@ -64,7 +64,7 @@ public class BaseController : MonoBehaviour
 
         if (Mathf.Abs(_fuel - _lastFuel) > Mathf.Epsilon)
         {
-            object[] parameters = { _fuel };
+            object[] parameters = { _Fuel };
             _view.RPC(nameof(UpdateFuel), RpcTarget.All, parameters);
         }
 
