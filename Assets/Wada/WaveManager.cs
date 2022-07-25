@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         time = setTime;
+        WaveStart();
     }
     private void Update()
     {
@@ -67,7 +68,7 @@ public class WaveManager : MonoBehaviour
                     randomRange -= Mathf.Abs(spawnObjs[i].Range);
                     if (randomRange <= 0)
                     {
-                        spawnObjs[i].SpawnEnemy(_enemy.name);
+                        spawnObjs[i].SpawnEnemy(_enemy/*.name*/);
                         break;
                     }
                 }
