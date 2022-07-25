@@ -42,7 +42,7 @@ public class State : MonoBehaviour
         set
         {
             _actionState = value;
-            OnCellStateChanged();
+            OnStateChanged();
         }
     }
 
@@ -51,12 +51,14 @@ public class State : MonoBehaviour
 
     private void OnValidate()
     {
-        OnCellStateChanged();
+        OnStateChanged();
 
         _image = GetComponent<Image>();
         ChangePlayerColor();
     }
-
+    /// <summary>
+    /// PlayerÇÃÉJÉâÅ[ÇïœÇ¶ÇÈ
+    /// </summary>
     private void ChangePlayerColor()
     {
         if (_image == null) { return; }
@@ -64,21 +66,23 @@ public class State : MonoBehaviour
         switch (_playerState)
         {
             case PlayerType.red:
-                _image.color = new Color(255, 0, 0);
+                _image.color = new Color(255, 0, 0, 50);
                 break;
             case PlayerType.blue:
-                _image.color = new Color(0, 255, 255);
+                _image.color = new Color(0, 255, 255, 50);
                 break;
             case PlayerType.green:
-                _image.color = new Color(0, 255, 0);
+                _image.color = new Color(0, 255, 0, 50);
                 break;
             case PlayerType.yellow:
-                _image.color = new Color(255, 255, 0);
+                _image.color = new Color(255, 255, 0, 50);
                 break;
         }
     }
-
-    private void OnCellStateChanged()
+    /// <summary>
+    /// PlayerÇÃStateÇ…âûÇ∂Çƒï\é¶ÇïœÇ¶ÇÈ
+    /// </summary>
+    private void OnStateChanged()
     {
         if (_view == null) { return; }
 
