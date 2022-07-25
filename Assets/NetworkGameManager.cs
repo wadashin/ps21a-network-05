@@ -58,6 +58,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
     {
         if (PhotonNetwork.IsConnected)
         {
+            Debug.Log("ƒ‹[ƒ€‚É“ü‚è‚Ü‚µ‚½");
             PhotonNetwork.JoinLobby();
         }
     }
@@ -174,6 +175,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
     {
         Debug.Log("OnJoinedRoom");
         SpawnPlayer();
+        //WaveStart()//ŒÄ‚×‚æ‚×
     }
 
     /// <summary>w’è‚µ‚½•”‰®‚Ö‚Ì“üº‚É¸”s‚µ‚½</summary>

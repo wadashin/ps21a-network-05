@@ -32,7 +32,6 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         time = setTime;
-        WaveStart();
     }
     private void Update()
     {
@@ -44,18 +43,18 @@ public class WaveManager : MonoBehaviour
 
     public void WaveStart()
     {
-        StartCoroutine(A());
+        StartCoroutine(EnemySpawn());
         time = 0;
     }
     public void IntervalStart()
     {
-        StopCoroutine(A());
+        StopCoroutine(EnemySpawn());
         time = 0;
     }
 
 
     /// <summary>各敵生成地点の長さに応じてランダムな場所に敵を生成</summary>
-    IEnumerator A()
+    IEnumerator EnemySpawn()
     {
         for (; ; )
         {
@@ -68,7 +67,7 @@ public class WaveManager : MonoBehaviour
                     randomRange -= Mathf.Abs(spawnObjs[i].Range);
                     if (randomRange <= 0)
                     {
-                        spawnObjs[i].SpawnEnemy(_enemy/*.name*/);
+                        spawnObjs[i].SpawnEnemy(_enemy.name);
                         break;
                     }
                 }
