@@ -39,8 +39,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     /// <summary>目的地の座標</summary>
     Vector3 _destination;
-    /// <summary>プレイヤーの現在の状態</summary>
-    PlayerState _state;
+    /// <summary>プレイヤーの現在の移動状態</summary>
+    PlayerMoveState _moveState;
+    /// <summary>プレイヤーの現在のエイム状態</summary>
+    PlayerAimState _aimState;
     /// <summary>攻撃のストック数</summary>
     int _attackStock = 0;
     /// <summary>マウスの座標</summary>
@@ -111,18 +113,18 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (_state == PlayerState.Move || _state == PlayerState.Attack)
+        if (_moveState == PlayerMoveState.Move || _moveState == PlayerMoveState.Attack)
         {
             if (Vector3.Distance(transform.position, _destination) < _stoppingDistance)
             {
                 _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
-                _state = PlayerState.Idol;
+                _moveState = PlayerMoveState.Idol;
             }
             else
             {
                 float speed = 0;
-                if (_state == PlayerState.Attack) speed = _attackSpeed;
-                else if (_state == PlayerState.Move) speed = _moveSpeed;
+                if (_moveState == PlayerMoveState.Attack) speed = _attackSpeed;
+                else if (_moveState == PlayerMoveState.Move) speed = _moveSpeed;
                 Vector3 dir = _destination - transform.position;
                 dir.y = 0;
                 dir = dir.normalized * speed;
@@ -180,7 +182,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            if (_state == PlayerState.Attack)
+            if (_moveState == PlayerMoveState.Attack)
             {
                 _attackTargetObject.SetActive(false);
                 yield break;
@@ -206,7 +208,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            if (_state == PlayerState.Move)
+            if (_aimState != PlayerAimState.Move)
             {
                 _moveTargetObject.SetActive(false);
                 yield break;
@@ -236,7 +238,7 @@ public class PlayerController : MonoBehaviour
         }
         if (context.canceled)
         {
-            _state = PlayerState.Attack;
+            _moveState = PlayerMoveState.Attack;
         }
     }
 
@@ -249,11 +251,13 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             Debug.Log(1);
+            _aimState = PlayerAimState.Move;
+            _moveState = PlayerMoveState.Move;
             StartCoroutine(MoveAim());
         }
         if (context.canceled)
         {
-            _state = PlayerState.Move;
+            _aimState = PlayerAimState.Non;
         }
     }
 
@@ -272,9 +276,9 @@ public class PlayerController : MonoBehaviour
 
 
 /// <summary>
-/// プレイヤーの状態
+/// プレイヤーの行動状態
 /// </summary>
-public enum PlayerState
+public enum PlayerMoveState
 {
     /// <summary>待機</summary>
     Idol,
@@ -282,4 +286,17 @@ public enum PlayerState
     Move,
     /// <summary>攻撃</summary>
     Attack,
+}
+
+/// <summary>
+/// プレイヤーのエイム状態
+/// </summary>
+public enum PlayerAimState
+{
+    /// <summary>待機</summary>
+    Non,
+    /// <summary>攻撃</summary>
+    Attack,
+    /// <summary>移動</summary>
+    Move,
 }

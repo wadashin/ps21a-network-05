@@ -172,6 +172,7 @@ MonoBehaviour:
   _life: 100
   _fuelReductionSpeed: 5
   _fuelText: {fileID: 286630657083967951}
+  _hpbar: {fileID: 0}
 --- !u!114 &286630655761243957
 MonoBehaviour:
   m_ObjectHideFlags: 0
