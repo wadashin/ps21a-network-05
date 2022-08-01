@@ -18,6 +18,11 @@ public class WaveManager : MonoBehaviour
     [Tooltip("とりあえずのウェーブとインターバルの長さ(今後デザイン予定)")]
     [SerializeField] float setTime = 10;
 
+    [Tooltip("ウェーブとインターバルの長さを交互に入れる配列")]
+    [SerializeField] float[] _waveArray = default;
+    int _waveLength;
+
+
     float time = 0;//ウェーブ開始時はこいつをゼロにする
     
 
@@ -31,14 +36,19 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        time = setTime;
+        //time = setTime;
         //WaveStart();
     }
     private void Update()
     {
-        if(time < setTime)
+        if(time < _waveArray[_waveLength])
         {
             time += Time.deltaTime;
+        }
+        else
+        {
+            ChangeTurn();
+            _waveLength++;
         }
     }
 
@@ -51,6 +61,19 @@ public class WaveManager : MonoBehaviour
     {
         StopCoroutine(EnemySpawn());
         time = 0;
+    }
+
+    public void ChangeTurn()
+    {
+        if(_waveLength % 2 == 0)
+        {
+            Debug.Log(1);
+            IntervalStart();
+        }
+        else
+        {
+            WaveStart();
+        }
     }
 
 
