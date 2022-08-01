@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bullet
   - Port
+  - Enemy
+  - BaseParent
   layers:
   - Default
   - TransparentFX
