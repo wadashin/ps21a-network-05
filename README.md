@@ -10,6 +10,7 @@
 
 [例](https://github.com/wadashin/ps21a-network-05/blob/Wada/Assets/Wada/EnemySpownManager.cs)
 
+・sceneの画面比率は16:9にしてね♡
 
 ・コミット時わかりやすくする為に　**追加**　**変更**　**削除**　などを内容の前に頭につける
 
