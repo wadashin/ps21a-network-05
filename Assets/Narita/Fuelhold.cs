@@ -28,9 +28,16 @@ public class Fuelhold : MonoBehaviour
     }
     private void Start()
     {
-        _baseparent = GameObject.FindGameObjectWithTag("BaseParent");
-        //Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity);
-        Debug.Log(Holdfuel);
+        if (!_baseparent)
+        {
+            Debug.LogError("BaseParentのタグをつけ忘れているか、Baseの親オブジェクトが存在しません");
+        }
+        else
+        {
+            _baseparent = GameObject.FindGameObjectWithTag("BaseParent");
+            //Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity);
+            Debug.Log(Holdfuel);
+        }
     }
     /// <summary>StartでBase自体を確保出来ないためここで確保する</summary>
     private void Update()
