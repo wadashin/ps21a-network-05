@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             {
                 destination = _attackTargetObject.transform.position;
             }
-            else if( _moveState == PlayerMoveState.Move)
+            else if (_moveState == PlayerMoveState.Move)
             {
                 destination = _moveTargetObject.transform.position;
             }
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
         //_aimState = PlayerAimState.Attack;
         while (true)
         {
-            if (!_moveButtonDown)
+            if (!_attackButtonDown)
             {
                 _attackTargetObject.SetActive(false);
                 yield break;
@@ -238,11 +238,8 @@ public class PlayerController : MonoBehaviour
                 _moveTargetObject.SetActive(true);
                 Debug.Log(2);
             }
-            if (_moveButtonDown)
-            {
-                _moveDestination = PointGet();
-                _moveTargetObject.transform.position = _moveDestination;
-            }
+            _moveDestination = PointGet();
+            _moveTargetObject.transform.position = _moveDestination;
             yield return null;
         }
     }
