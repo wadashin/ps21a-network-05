@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(PhotonTransformView))]
+
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField, Tooltip("ˆÚ“®‘¬“x")]
