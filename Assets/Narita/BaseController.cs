@@ -36,6 +36,7 @@ public class BaseController : MonoBehaviour
     float _lastLife;
     int DemoDamage = 5;
     public float _Fuel { get => _fuel; set => _fuel = value; }
+    public float _MaxFuel { get => _maxfuel; set => _maxfuel = value; }
     void Start()
     {
 
