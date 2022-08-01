@@ -262,7 +262,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.26315773, y: 1}
+    m_SensorSize: {x: 1.1968431, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -434,7 +434,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh49752
+  m_Name: pb_Mesh29816
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2164,7 +2164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872d621f2a0500646839e38b89f07d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefabName: Player
+  _playerPrefabName: Player 1
   _spawnPositions:
   - {fileID: 243479782}
   - {fileID: 494290256}
@@ -2552,6 +2552,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _enemy
+      value: 
+      objectReference: {fileID: 304515026569322497, guid: d2e692b45070f924f8223f1054ea6ffa, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
 --- !u!43 &2125899335
@@ -2560,7 +2564,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh48982
+  m_Name: pb_Mesh29856
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
