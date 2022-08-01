@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,8 @@ using ExitGames.Client.Photon;
 public class BaseController : MonoBehaviour
 {
     /// <summary>燃料の最大値</summary>
-    private float _maxfuel = 100f;
+    private float _maxfuel = 0;
+    private float _maxlife = 0;
     /// <summary>残りの燃料</summary>
     [SerializeField] public float _fuel = 100f;
     /// <summary>残りのライフ</summary>
@@ -26,19 +26,27 @@ public class BaseController : MonoBehaviour
     /// <summary>燃料が減る速さ</summary>
     [SerializeField] float _fuelReductionSpeed = 1f;
     /// <summary>燃料を表示する UI</summary>
-    [SerializeField] Text _fuelText;
-    [SerializeField] Slider _hpbar = null;
+    Slider _fuelbar = null;
+    /// <summary>体力を表示する UI</summary>
+    Slider _hpbar = null;
     PhotonView _view;
     CinemachineDollyCart _cart;
-    /// <summary>_fuelを持つ</summary>
+    /// <summary>変化後の_fuelを持つ</summary>
     float _lastFuel;
-
+    float _lastLife;
+    int DemoDamage = 5;
     public float _Fuel { get => _fuel; set => _fuel = value; }
     void Start()
     {
-        _hpbar.maxValue = _life;
+
         _view = GetComponent<PhotonView>();
-        
+
+        _maxfuel = _fuel;
+        _maxlife = _life;
+
+        _fuelbar = GameObject.Find("Fuelbar").GetComponent<Slider>();
+        _hpbar = GameObject.Find("Hpbar").GetComponent<Slider>();
+
         if (_view.IsMine)
         {
             _cart = FindObjectOfType<CinemachineDollyCart>();
@@ -55,7 +63,7 @@ public class BaseController : MonoBehaviour
         {
             _cart.m_Position += _speed * Time.deltaTime;
         }
-        else if(_fuel > _maxfuel)//プレイヤーから補充した燃料がbaseの持つ燃料の最大値を超えた場合。
+        else if (_fuel > _maxfuel)//プレイヤーから補充した燃料がbaseの持つ燃料の最大値を超えた場合。
         {
             _fuel = _maxfuel;
         }
@@ -64,26 +72,28 @@ public class BaseController : MonoBehaviour
             _fuel = 0;
         }
 
-        if (Mathf.Abs(_fuel - _lastFuel) > Mathf.Epsilon)
+        if (Mathf.Abs(_fuel - _lastFuel) > Mathf.Epsilon)//Mathf.Epsilonは0ではない最も小さな値
         {
             object[] parameters = { _Fuel };
             _view.RPC(nameof(UpdateFuel), RpcTarget.All, parameters);
         }
 
+        //if (Mathf.Abs(_life - _lastLife) > Mathf.Epsilon)
+        //{
+        //    object[] parameters = { _life };
+        //    _view.RPC(nameof(UpdateLife), RpcTarget.All, parameters);
+        //}
+        _fuelbar.value = _fuel / _maxfuel;
         _lastFuel = _fuel;
-    }
-
-    [PunRPC]
-    void UpdateFuel(float fuel)
-    {
-        _fuelText.text = fuel.ToString("F2");
     }
 
     public void GetDamage(int damage)
     {
-        _hpbar.maxValue -= damage;
-        Debug.Log(damage + " ダメージを受けて拠点のHPが " + _life + " になった！");
+        _life -= damage;
+        _lastLife = _life;
 
+        _hpbar.value = _life / _maxlife;
+        Debug.Log(damage + " ダメージを受けて拠点のHPが " + _life + " になった！");
         if (_life <= 0)
         {
             Death();
@@ -94,4 +104,17 @@ public class BaseController : MonoBehaviour
     {
 
     }
+
+    [PunRPC]
+    void UpdateFuel(float fuel)
+    {
+        _fuelbar.value = fuel;
+    }
+
+    //void UpdateLife(float life)
+    //{
+    //    _hpbar.value = life;
+    //}
+
+
 }
