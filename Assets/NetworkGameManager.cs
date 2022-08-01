@@ -59,6 +59,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("ƒ‹[ƒ€‚É“ü‚è‚Ü‚µ‚½");
+
+
             PhotonNetwork.JoinLobby();
         }
     }
@@ -97,7 +99,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
     /// <summary>
     /// ƒvƒŒƒCƒ„[‚ğ¶¬‚·‚é
     /// </summary>
-    private void SpawnPlayer()
+    public void SpawnPlayer()
     {
         // ƒvƒŒƒCƒ„[‚ğ‚Ç‚±‚É spawn ‚³‚¹‚é‚©Œˆ‚ß‚é
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // ©•ª‚Ì ActorNumber ‚ğæ“¾‚·‚éB‚È‚¨ ActorNumber ‚Íu1‚©‚çv“üº‡‚ÉU‚ç‚ê‚éB
@@ -174,7 +176,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        SpawnPlayer();
+        SpawnPlayer();////////////////////////////////////////////////////////////////////////////////////
         //WaveStart()//ŒÄ‚×‚æ‚×
     }
 

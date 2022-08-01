@@ -38,15 +38,21 @@ public class PlayerController : MonoBehaviour
     PhotonView _view;
     Rigidbody _rb;
     /// <summary>目的地の座標</summary>
-    Vector3 _destination;
+    Vector3 _moveDestination;
+    /// <summary>目的地の座標</summary>
+    Vector3 _attackDestination;
     /// <summary>プレイヤーの現在の移動状態</summary>
     PlayerMoveState _moveState;
     /// <summary>プレイヤーの現在のエイム状態</summary>
-    PlayerAimState _aimState;
+    //PlayerAimState _aimState;
     /// <summary>攻撃のストック数</summary>
     int _attackStock = 0;
     /// <summary>マウスの座標</summary>
     Vector2 _mousePosition;
+    /// <summary>右ボタンが押されてるか</summary>
+    bool _attackButtonDown = false;
+    /// <summary>左ボタンが押されてるか</summary>
+    bool _moveButtonDown = false;
 
     void Start()
     {
@@ -55,7 +61,7 @@ public class PlayerController : MonoBehaviour
         if (_view.IsMine)
         {
             _rb = GetComponent<Rigidbody>();
-            _destination = transform.position;
+            _moveDestination = transform.position;
             if (!_attackTargetObject)
             {
                 _attackTargetObject = new GameObject();
@@ -72,7 +78,7 @@ public class PlayerController : MonoBehaviour
             }
             _moveTargetObject = Instantiate(_moveTargetObject);
             _moveTargetObject.SetActive(false);
-            _rb.transform.position = _destination;
+            _rb.transform.position = _moveDestination;
             // カメラをセットアップする
             var vcam = FindObjectOfType<CinemachineVirtualCameraBase>();
             vcam.LookAt = transform;
@@ -115,7 +121,20 @@ public class PlayerController : MonoBehaviour
     {
         if (_moveState == PlayerMoveState.Move || _moveState == PlayerMoveState.Attack)
         {
-            if (Vector3.Distance(transform.position, _destination) < _stoppingDistance)
+            Vector3 destination;
+            if (_moveState == PlayerMoveState.Attack)
+            {
+                destination = _attackTargetObject.transform.position;
+            }
+            else if( _moveState == PlayerMoveState.Move)
+            {
+                destination = _moveTargetObject.transform.position;
+            }
+            else
+            {
+                destination = transform.position;
+            }
+            if (Vector3.Distance(transform.position, destination) < _stoppingDistance)
             {
                 _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
                 _moveState = PlayerMoveState.Idol;
@@ -125,7 +144,7 @@ public class PlayerController : MonoBehaviour
                 float speed = 0;
                 if (_moveState == PlayerMoveState.Attack) speed = _attackSpeed;
                 else if (_moveState == PlayerMoveState.Move) speed = _moveSpeed;
-                Vector3 dir = _destination - transform.position;
+                Vector3 dir = destination - transform.position;
                 dir.y = 0;
                 dir = dir.normalized * speed;
                 _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
@@ -180,9 +199,10 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator AttackAim()
     {
+        //_aimState = PlayerAimState.Attack;
         while (true)
         {
-            if (_moveState == PlayerMoveState.Attack)
+            if (!_moveButtonDown)
             {
                 _attackTargetObject.SetActive(false);
                 yield break;
@@ -193,8 +213,8 @@ public class PlayerController : MonoBehaviour
             }
             Vector3 point = PointGet();
             float dis = Vector3.Distance(transform.position, point);
-            _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-            _attackTargetObject.transform.position = _destination;
+            _attackDestination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+            _attackTargetObject.transform.position = _attackDestination;
             yield return null;
         }
     }
@@ -208,7 +228,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            if (_aimState != PlayerAimState.Move)
+            if (!_moveButtonDown)
             {
                 _moveTargetObject.SetActive(false);
                 yield break;
@@ -218,8 +238,11 @@ public class PlayerController : MonoBehaviour
                 _moveTargetObject.SetActive(true);
                 Debug.Log(2);
             }
-            _destination = PointGet();
-            _moveTargetObject.transform.position = _destination;
+            if (_moveButtonDown)
+            {
+                _moveDestination = PointGet();
+                _moveTargetObject.transform.position = _moveDestination;
+            }
             yield return null;
         }
     }
@@ -234,11 +257,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            _attackButtonDown = true;
             StartCoroutine(AttackAim());
         }
         if (context.canceled)
         {
+            _attackButtonDown = false;
             _moveState = PlayerMoveState.Attack;
+            //_aimState = PlayerAimState.Non;
         }
     }
 
@@ -250,14 +276,15 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            _moveButtonDown = true;
             Debug.Log(1);
-            _aimState = PlayerAimState.Move;
-            _moveState = PlayerMoveState.Move;
             StartCoroutine(MoveAim());
         }
         if (context.canceled)
         {
-            _aimState = PlayerAimState.Non;
+            _moveState = PlayerMoveState.Move;
+            _moveButtonDown = false;
+            //_aimState = PlayerAimState.Non;
         }
     }
 
@@ -291,12 +318,12 @@ public enum PlayerMoveState
 /// <summary>
 /// プレイヤーのエイム状態
 /// </summary>
-public enum PlayerAimState
-{
-    /// <summary>待機</summary>
-    Non,
-    /// <summary>攻撃</summary>
-    Attack,
-    /// <summary>移動</summary>
-    Move,
-}
+//public enum PlayerAimState
+//{
+//    /// <summary>待機</summary>
+//    Non,
+//    /// <summary>攻撃</summary>
+//    Attack,
+//    /// <summary>移動</summary>
+//    Move,
+//}

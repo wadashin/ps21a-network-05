@@ -18,15 +18,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 
-    void InitializeGame()
+    public void InitializeGame()
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -39,11 +39,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     #region IOnEventCallback の実装
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
-        // ゲームスタートを 1 とする
-        if (photonEvent.Code == 1)
-        {
-            InitializeGame();
-        }
+        //// ゲームスタートを 1 とする
+        //if (photonEvent.Code == 1)
+        //{
+        //    InitializeGame();
+        //}
     }
     #endregion
 }
