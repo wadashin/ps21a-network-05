@@ -99,4 +99,13 @@ public class WaveManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnTime);
         }
     }
+
+    IEnumerator CountDown()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+
+            yield return new WaitForSeconds(1);
+        }
+    }
 }
