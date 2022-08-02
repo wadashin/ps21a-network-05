@@ -18,24 +18,34 @@ public class Enemy : MonoBehaviour
     int _hp = 0;
     [SerializeField, Tooltip("攻撃力")]
     int _atk = 1;
+    bool _canMove = true;
     [SerializeField, Tooltip("ドロップアイテムの種類（配列の要素）")]
     int _dropType = 0;
     [SerializeField, Tooltip("ドロップアイテムの配列")]
     GameObject[] _drop = default;
+
+    [SerializeField, Tooltip("拠点オブジェクト")]
     GameObject _base = default; //拠点オブジェクト
     Rigidbody _rb = default;
 
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         _base = GameObject.FindGameObjectWithTag("Base");
+        if( _base != null )
+        {
+            Debug.Log("ベースない");
+        }
 
     }
 
     private void Update()
     {
-        if (_base != null)
+        if (!_base)
         {
             _base = GameObject.FindGameObjectWithTag("Base");
+            Debug.Log("ベースあった");
+
         }
         Move();
 
@@ -44,15 +54,19 @@ public class Enemy : MonoBehaviour
     /// <summary> エネミー移動処理 </summary>
     private void Move()
     {
-        if (_base != null)
+        if (_base)
         {
-            transform.LookAt(_base.transform);
-            Vector3 sub = _base.transform.position - transform.position;
-            sub.Normalize();
-            transform.position += sub * _moveSpeed * Time.deltaTime;
-            Vector3 velocity = sub.normalized * _moveSpeed;
-            velocity.y = _rb.velocity.y;
-            _rb.velocity = velocity;
+            if (_canMove)
+            {
+                transform.LookAt(_base.transform);
+                Vector3 sub = _base.transform.position - transform.position;
+                sub.Normalize();
+                //transform.position += sub * _moveSpeed * Time.deltaTime;
+                Vector3 velocity = sub.normalized * _moveSpeed;
+                velocity.y = _rb.velocity.y;
+                _rb.velocity = velocity;
+            }
+
         }
 
     }
@@ -61,7 +75,6 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Base")
         {
-
             CallDamage(collision);
         }
     }
