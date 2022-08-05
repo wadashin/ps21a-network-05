@@ -124,11 +124,11 @@ public class PlayerController : MonoBehaviour
             Vector3 destination;
             if (_moveState == PlayerMoveState.Attack)
             {
-                destination = _attackTargetObject.transform.position;
+                destination = _attackDestination;
             }
             else if (_moveState == PlayerMoveState.Move)
             {
-                destination = _moveTargetObject.transform.position;
+                destination = _moveDestination;
             }
             else
             {
@@ -151,6 +151,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
 
     /// <summary>
     /// à⁄ìÆêÊÇÃç¿ïWÇê›íËÇ∑ÇÈ
@@ -204,6 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!_attackButtonDown)
             {
+                _attackDestination = _attackTargetObject.transform.position;
                 _attackTargetObject.SetActive(false);
                 yield break;
             }
@@ -213,8 +216,8 @@ public class PlayerController : MonoBehaviour
             }
             Vector3 point = PointGet();
             float dis = Vector3.Distance(transform.position, point);
-            _attackDestination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-            _attackTargetObject.transform.position = _attackDestination;
+            Vector3 des = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+            _attackTargetObject.transform.position = des;
             yield return null;
         }
     }
@@ -230,6 +233,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!_moveButtonDown)
             {
+                _moveDestination = _moveTargetObject.transform.position;
                 _moveTargetObject.SetActive(false);
                 yield break;
             }
@@ -238,8 +242,7 @@ public class PlayerController : MonoBehaviour
                 _moveTargetObject.SetActive(true);
                 Debug.Log(2);
             }
-            _moveDestination = PointGet();
-            _moveTargetObject.transform.position = _moveDestination;
+            _moveTargetObject.transform.position = PointGet();
             yield return null;
         }
     }
