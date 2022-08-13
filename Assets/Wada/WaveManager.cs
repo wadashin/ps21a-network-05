@@ -39,9 +39,9 @@ public class WaveManager : MonoBehaviour
         //time = setTime;
         //WaveStart();
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if(time < _waveArray[_waveLength])
+        if (time < _waveArray[_waveLength])
         {
             time += Time.deltaTime;
         }
@@ -67,7 +67,6 @@ public class WaveManager : MonoBehaviour
     {
         if(_waveLength % 2 == 0)
         {
-            Debug.Log(1);
             IntervalStart();
         }
         else
