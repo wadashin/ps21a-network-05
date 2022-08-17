@@ -110,6 +110,8 @@ public class PlayerController : MonoBehaviour
         //{
 
         //}
+        AttackAim();
+        MoveAim();
         Move();
 
     }
@@ -199,27 +201,29 @@ public class PlayerController : MonoBehaviour
     /// アタック時の移動先を指定する
     /// </summary>
     /// <returns></returns>
-    IEnumerator AttackAim()
+    void AttackAim()
     {
         //_aimState = PlayerAimState.Attack;
-        while (true)
+        //while (true)
+        //{
+
+        if (!_attackButtonDown)
         {
-            if (!_attackButtonDown)
-            {
-                _attackDestination = _attackTargetObject.transform.position;
-                _attackTargetObject.SetActive(false);
-                yield break;
-            }
-            if (!_attackTargetObject.activeSelf)
-            {
-                _attackTargetObject.SetActive(true);
-            }
-            Vector3 point = PointGet();
-            float dis = Vector3.Distance(transform.position, point);
-            Vector3 des = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-            _attackTargetObject.transform.position = des;
-            yield return null;
+            _attackDestination = _attackTargetObject.transform.position;
+            _attackTargetObject.SetActive(false);
+            //yield break;
+            return;
         }
+        if (!_attackTargetObject.activeSelf)
+        {
+            _attackTargetObject.SetActive(true);
+        }
+        Vector3 point = PointGet();
+        float dis = Vector3.Distance(transform.position, point);
+        Vector3 des = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
+        _attackTargetObject.transform.position = des;
+        //yield return null;
+        //}
     }
 
 
@@ -227,7 +231,7 @@ public class PlayerController : MonoBehaviour
     /// 通常移動時の移動先を指定する
     /// </summary>
     /// <returns></returns>
-    IEnumerator MoveAim()
+    void MoveAim()
     {
         while (true)
         {
@@ -235,15 +239,13 @@ public class PlayerController : MonoBehaviour
             {
                 _moveDestination = _moveTargetObject.transform.position;
                 _moveTargetObject.SetActive(false);
-                yield break;
+                return;
             }
             if (!_moveTargetObject.activeSelf)
             {
                 _moveTargetObject.SetActive(true);
-                Debug.Log(2);
             }
             _moveTargetObject.transform.position = PointGet();
-            yield return null;
         }
     }
 
@@ -258,13 +260,11 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             _attackButtonDown = true;
-            StartCoroutine(AttackAim());
         }
         if (context.canceled)
         {
             _attackButtonDown = false;
             _moveState = PlayerMoveState.Attack;
-            //_aimState = PlayerAimState.Non;
         }
     }
 
@@ -277,8 +277,7 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             _moveButtonDown = true;
-            Debug.Log(1);
-            StartCoroutine(MoveAim());
+            //StartCoroutine(MoveAim());
         }
         if (context.canceled)
         {
