@@ -13,6 +13,8 @@ public class Fuelhold : MonoBehaviour
  　　GameObject _baseparent = null;
     /// <summary>Base</summary>
     BaseController _base = null;
+    /// <summary>_baseparentの子オブジェクト総数</summary>
+    private int baseparentchildcount = 1;
     bool cheak = false;
     public int Holdfuel {
         get
@@ -28,18 +30,26 @@ public class Fuelhold : MonoBehaviour
     }
     private void Start()
     {
-        _baseparent = GameObject.FindGameObjectWithTag("BaseParent");
-        //Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity);
-        Debug.Log(Holdfuel);
+        if (GameObject.FindGameObjectWithTag("BaseParent"))
+        {
+            _baseparent = GameObject.FindGameObjectWithTag("BaseParent");
+            Debug.Log(Holdfuel);
+        }
+        else
+        {
+            Debug.LogError("BaseParentのタグをつけ忘れているか、Baseの親オブジェクトが存在しません");
+            //Instantiate(fuel, new Vector3(0, 0, 0), Quaternion.identity)
+        }
     }
     /// <summary>StartでBase自体を確保出来ないためここで確保する</summary>
     private void Update()
     {
         if (!cheak)
         {
-            if (_baseparent.transform.childCount == 1)
+            if (_baseparent.transform.childCount == baseparentchildcount)
             {
                 _base = _baseparent.GetComponentInChildren<BaseController>();
+                Debug.Log(_baseparent);
                 cheak = true;
             }
         }
