@@ -26,15 +26,21 @@ public class BaseController : MonoBehaviour
     /// <summary>燃料が減る速さ</summary>
     [SerializeField] float _fuelReductionSpeed = 1f;
     /// <summary>燃料を表示する UI</summary>
+    [SerializeField]
     Slider _fuelbar = null;
     /// <summary>体力を表示する UI</summary>
+    [SerializeField]
     Slider _hpbar = null;
     PhotonView _view;
     CinemachineDollyCart _cart;
     /// <summary>変化後の_fuelを持つ</summary>
     float _lastFuel;
+    /// <summary>変化後の_lifeを持つ</summary>
     float _lastLife;
-    int DemoDamage = 5;
+
+    ///// <summary>ダメージ確認用変数</summary>
+    //int DemoDamage = 5;
+
     public float _Fuel { get => _fuel; set => _fuel = value; }
     public float _MaxFuel { get => _maxfuel; set => _maxfuel = value; }
     void Start()
@@ -45,8 +51,8 @@ public class BaseController : MonoBehaviour
         _maxfuel = _fuel;
         _maxlife = _life;
 
-        _fuelbar = GameObject.Find("Fuelbar").GetComponent<Slider>();
-        _hpbar = GameObject.Find("Hpbar").GetComponent<Slider>();
+        //_fuelbar = GameObject.Find("Fuelbar").GetComponent<Slider>();
+        //_hpbar = GameObject.Find("Hpbar").GetComponent<Slider>();
 
         if (_view.IsMine)
         {
