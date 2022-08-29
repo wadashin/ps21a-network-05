@@ -66,6 +66,7 @@ MonoBehaviour:
   _moveTargetObject: {fileID: 9037444323240498491, guid: d588a841373ab024fad857ec3691ab9c, type: 3}
   _maxAttackStock: 3
   _attackCoolTime: 1
+  _enemyTag: 
 --- !u!114 &8960828197209621867
 MonoBehaviour:
   m_ObjectHideFlags: 0
