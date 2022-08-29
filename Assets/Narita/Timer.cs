@@ -17,8 +17,8 @@ public class Timer : MonoBehaviour
     ///<summary>GameManagerが付いているオブジェクト名</summary>
     [SerializeField]
     string objectname = "GameManagerが付いているオブジェクト名";
-    ///<summary>終了しているかどうかの判定用</summary>
-    bool finish = false;
+    /////<summary>終了しているかどうかの判定用</summary>
+    //bool finish = false;
 
     GameManager gamemanager = null;
     // Start is called before the first frame update
@@ -30,15 +30,12 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gamemanager.Start)
+        second += Time.deltaTime;
+        if (second >= 10f)
         {
-            second += Time.deltaTime;
-            if (second >= 10f)
-            {
-                minute++;
-                second = second - 10;
-            }
-            timertext.text = minute.ToString("00") + ":" + Mathf.Floor(second).ToString("00");
+            minute++;
+            second = second - 10;
         }
+        timertext.text = minute.ToString("00") + ":" + Mathf.Floor(second).ToString("00");
     }
 }
