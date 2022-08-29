@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int _maxAttackStock = 3;
     [Tooltip("攻撃のクールタイム")]
     [SerializeField] float _attackCoolTime = 1f;
+    [Tooltip("攻撃の当たり判定")]
+    [SerializeField] string _enemyTag = "";
 
     PhotonView _view;
     Rigidbody _rb;
@@ -233,20 +235,32 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     void MoveAim()
     {
-        while (true)
+        if (!_moveButtonDown)
         {
-            if (!_moveButtonDown)
-            {
-                _moveDestination = _moveTargetObject.transform.position;
-                _moveTargetObject.SetActive(false);
-                return;
-            }
-            if (!_moveTargetObject.activeSelf)
-            {
-                _moveTargetObject.SetActive(true);
-            }
-            _moveTargetObject.transform.position = PointGet();
+            _moveDestination = _moveTargetObject.transform.position;
+            _moveTargetObject.SetActive(false);
+            Debug.Log(1);
+            return;
         }
+        if (!_moveTargetObject.activeSelf)
+        {
+            _moveTargetObject.SetActive(true);
+        }
+        _moveTargetObject.transform.position = PointGet();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(_enemyTag))
+        {
+            _view.RPC(nameof(Attack), RpcTarget.All, 0);
+        }
+    }
+
+    [PunRPC]
+    void Attack(uint id)
+    {
+        char a;
     }
 
     #region 入力受付部
@@ -281,10 +295,13 @@ public class PlayerController : MonoBehaviour
         }
         if (context.canceled)
         {
-            _moveState = PlayerMoveState.Move;
+            if (_moveState != PlayerMoveState.Attack)
+            {
+                _moveState = PlayerMoveState.Move;
+            }
             _moveButtonDown = false;
-            //_aimState = PlayerAimState.Non;
         }
+        //_aimState = PlayerAimState.Non;
     }
 
     /// <summary>
