@@ -18,6 +18,12 @@ public class TestSceneManager : MonoBehaviourPunCallbacks, IOnEventCallback
             {
                 gm.InitializeGame();
             }
+
+            WaveManager wm = FindObjectOfType<WaveManager>();
+            if (wm)
+            {
+                wm.WaveStart();
+            }
         }
     }
     #endregion
