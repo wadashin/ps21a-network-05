@@ -95,6 +95,8 @@ public class PlayerController : MonoBehaviour
                 PhotonNetwork.RaiseEvent(1, null, raiseEventOptions, sendOptions);
             }
         }
+        _attackStock = _maxAttackStock;
+        StartCoroutine(AttackRecharge());
     }
 
     void Update()
@@ -192,10 +194,18 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator AttackRecharge()
     {
-        yield return _attackCoolTime;
-        if (_attackStock < _maxAttackStock)
+        while (true)
         {
-            _attackStock++;
+            if (_attackStock < _maxAttackStock)
+            {
+                if (_attackCoolTime > 0)
+                {
+                    yield return new WaitForSeconds(_attackCoolTime);
+                }
+                _attackStock++;
+                Debug.Log($"ストック回復{_attackStock}");
+            }
+            yield return null;
         }
     }
 
@@ -211,7 +221,6 @@ public class PlayerController : MonoBehaviour
 
         if (!_attackButtonDown)
         {
-            _attackDestination = _attackTargetObject.transform.position;
             _attackTargetObject.SetActive(false);
             //yield break;
             return;
@@ -228,6 +237,11 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
+    void Attack()
+    {
+        _attackDestination = _attackTargetObject.transform.position;
+    }
+
 
     /// <summary>
     /// 通常移動時の移動先を指定する
@@ -239,7 +253,6 @@ public class PlayerController : MonoBehaviour
         {
             _moveDestination = _moveTargetObject.transform.position;
             _moveTargetObject.SetActive(false);
-            Debug.Log(1);
             return;
         }
         if (!_moveTargetObject.activeSelf)
@@ -253,15 +266,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag(_enemyTag))
         {
-            _view.RPC(nameof(Attack), RpcTarget.All, 0);
         }
     }
 
-    [PunRPC]
-    void Attack(uint id)
-    {
-        char a;
-    }
 
     #region 入力受付部
 
@@ -278,7 +285,13 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             _attackButtonDown = false;
-            _moveState = PlayerMoveState.Attack;
+            if (_attackStock > 0)
+            {
+                _moveState = PlayerMoveState.Attack;
+                Attack();
+                _attackStock--;
+                Debug.Log($"ストック消費{_attackStock}");
+            }
         }
     }
 
