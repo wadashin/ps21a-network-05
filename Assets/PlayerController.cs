@@ -154,6 +154,9 @@ public class PlayerController : MonoBehaviour
                 dir.y = 0;
                 dir = dir.normalized * speed;
                 _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
+                Vector3 angle = transform.eulerAngles;
+                angle = new Vector3(angle.x, Mathf.Atan2(-dir.z, dir.x) / Mathf.PI * 180, angle.z);
+                transform.eulerAngles = angle;
             }
         }
     }
