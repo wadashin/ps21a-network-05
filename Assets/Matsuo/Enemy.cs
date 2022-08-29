@@ -7,30 +7,31 @@ using Photon.Pun;
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(PhotonTransformView))]
 
-
+//エネミーテスト用スクリプト
 public class Enemy : MonoBehaviour
 {
-    [SerializeField, Tooltip("移動速度")]
+    [SerializeField, Header("移動速度")]
     float _moveSpeed = 1;
-    [SerializeField, Tooltip("最大体力")]
+    [SerializeField, Header("最大体力")]
     int _maxHp = 100;
-    [SerializeField, Tooltip("現在体力")]
+    [SerializeField, Header("現在体力")]
     int _hp = 0;
-    [SerializeField, Tooltip("攻撃力")]
+    [SerializeField, Header("攻撃力")]
     int _atk = 1;
     bool _canMove = true;
-    [SerializeField, Tooltip("ドロップアイテムの種類（配列の要素）")]
+    [SerializeField, Header("ドロップアイテムの種類（配列の要素）")]
     int _dropType = 0;
-    [SerializeField, Tooltip("ドロップアイテムの配列")]
+    [SerializeField, Header("ドロップアイテムの配列")]
     GameObject[] _drop = default;
 
-    [SerializeField, Tooltip("拠点オブジェクト")]
+    [SerializeField, Header("拠点オブジェクト(確認用設定しなくてよい)")]
     GameObject _base = default; //拠点オブジェクト
     Rigidbody _rb = default;
-
+    PhotonView _view;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _view = GetComponent<PhotonView>();
         _base = GameObject.FindGameObjectWithTag("Base");
         if( _base != null )
         {
@@ -73,10 +74,12 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //対象がベースの場合のみダメージ処理
         if (collision.gameObject.tag == "Base")
         {
             CallDamage(collision);
         }
+
     }
 
     /// <summary>
@@ -85,10 +88,11 @@ public class Enemy : MonoBehaviour
     /// <param name="collider"></param>
     void CallDamage(Collision collider)
     {
+        collider.gameObject.GetComponent<BaseController>().GetDamage(_atk);
+
         //↓に拠点のダメージ処理があるスクリプトを指定
-        //if(collider.gameObject.GetComponent<>().GetDamage())
+        //if (collider.gameObject.GetComponent<BaseController>().GetDamage())
         //{
-        //    //collider.gameObject.GetComponent<>().GetDamage(_atk);
         //}
     }
 
@@ -103,6 +107,7 @@ public class Enemy : MonoBehaviour
         PhotonNetwork.Destroy(gameObject);
     }
 
+    [PunRPC]
     /// <summary> エネミーダメージ処理 </summary>
     public void GetDamage(int damage)
     {
@@ -113,5 +118,11 @@ public class Enemy : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public void CallGetDamage(int damage)
+    {
+        _view.RPC(nameof(GetDamage), RpcTarget.All,damage);
+
     }
 }
