@@ -7,22 +7,32 @@ using UnityEngine;
 
 public class TestSceneManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+    [Tooltip("開始時に" + nameof(GameManager.InitializeGame) + "を呼ぶか")]
+    [SerializeField] bool _isCallInitializeGame = false;
+    [Tooltip("開始時に" + nameof(WaveManager.WaveStart) + "を呼ぶか")]
+    [SerializeField] bool _isCallWaveStart = false;
     #region IOnEventCallback の実装
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
         // ゲームスタートを 1 とする
         if (photonEvent.Code == 1)
         {
-            GameManager gm = FindObjectOfType<GameManager>();
-            if (gm)
+            if (_isCallInitializeGame)
             {
-                gm.InitializeGame();
+                GameManager gm = FindObjectOfType<GameManager>();
+                if (gm)
+                {
+                    gm.InitializeGame();
+                }
             }
 
-            WaveManager wm = FindObjectOfType<WaveManager>();
-            if (wm)
+            if (_isCallWaveStart)
             {
-                wm.WaveStart();
+                WaveManager wm = FindObjectOfType<WaveManager>();
+                if (wm)
+                {
+                    wm.WaveStart();
+                }
             }
         }
     }
