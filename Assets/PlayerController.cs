@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int _maxAttackStock = 3;
     [Tooltip("攻撃のクールタイム")]
     [SerializeField] float _attackCoolTime = 1f;
-    [Tooltip("攻撃の当たり判定")]
+    [Tooltip("エネミー共通のタグ")]
     [SerializeField] string _enemyTag = "";
 
     PhotonView _view;
@@ -154,6 +154,9 @@ public class PlayerController : MonoBehaviour
                 dir.y = 0;
                 dir = dir.normalized * speed;
                 _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
+                Vector3 angle = transform.eulerAngles;
+                angle = new Vector3(angle.x, Mathf.Atan2(-dir.z, dir.x) / Mathf.PI * 180, angle.z);
+                transform.eulerAngles = angle;
             }
         }
     }
@@ -237,6 +240,9 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// 攻撃のストックがあれば攻撃を開始する
+    /// </summary>
     void Attack()
     {
         _attackDestination = _attackTargetObject.transform.position;
@@ -264,8 +270,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_enemyTag))
+        if (_moveState == PlayerMoveState.Attack)
         {
+            if (other.CompareTag(_enemyTag))
+            {
+                
+            }
         }
     }
 
