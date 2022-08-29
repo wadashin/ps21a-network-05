@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     [SerializeField] string _basePrefabName = "Base";
     /// <summary>DollyCart のオブジェクト</summary>
     [SerializeField] Transform _dollyCart;
-
     void Update()
     {
 

@@ -14,21 +14,7 @@ public class Timer : MonoBehaviour
     ///<summary>表示用テキスト</summary>
     [SerializeField]
     Text timertext = null;
-    ///<summary>GameManagerが付いているオブジェクト名</summary>
-    [SerializeField]
-    string objectname = "GameManagerが付いているオブジェクト名";
-    /////<summary>終了しているかどうかの判定用</summary>
-    //bool finish = false;
-
-    GameManager gamemanager = null;
-    // Start is called before the first frame update
-    void Start()
-    {
-        gamemanager = GameObject.Find(objectname).GetComponent<GameManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
+    public void TimerMethod()
     {
         second += Time.deltaTime;
         if (second >= 10f)
