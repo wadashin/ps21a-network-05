@@ -198,7 +198,10 @@ public class PlayerController : MonoBehaviour
         {
             if (_attackStock < _maxAttackStock)
             {
-                yield return new WaitForSeconds(_attackCoolTime);
+                if (_attackCoolTime > 0)
+                {
+                    yield return new WaitForSeconds(_attackCoolTime);
+                }
                 _attackStock++;
                 Debug.Log($"ストック回復{_attackStock}");
             }
