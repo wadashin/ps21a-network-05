@@ -211,7 +211,7 @@ MonoBehaviour:
   _maxAttackStock: 3
   _attackCoolTime: 1
   _enemyTag: Enemy
-  _atk: 0
+  _atk: 1
 --- !u!114 &8960828197209621867
 MonoBehaviour:
   m_ObjectHideFlags: 0
