@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("エネミー共通のタグ")]
     [SerializeField] string _enemyTag = "";
     [Tooltip("攻撃力")]
-    [SerializeField] int _atk;
+    [SerializeField] int _atk = 1;
 
     PhotonView _view;
     Rigidbody _rb;
@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
         //{
 
         //}
+        _rb.angularVelocity = Vector3.zero;
         AttackAim();
         MoveAim();
         Move();
@@ -272,16 +273,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(1);
         if (_moveState == PlayerMoveState.Attack)
         {
-            Debug.Log(2);
             if (other.CompareTag(_enemyTag))
             {
-                Debug.Log(3);
                 if (other.gameObject.TryGetComponent<Enemy>(out Enemy e))
                 {
-                    Debug.Log(4);
                     e.CallGetDamage(_atk);
                 }
             }

@@ -851,11 +851,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _maxHp: 10
-  _hp: 0
+  _maxHp: 1
+  _hp: 1
   _atk: 2
   _dropType: 0
-  _drop: []
+  _drop:
+  - {fileID: 5404119411593971181, guid: 7117e2601d2a4d4478eceaa6938c9a02, type: 3}
   _base: {fileID: 0}
 --- !u!65 &5340456045358876687
 BoxCollider:

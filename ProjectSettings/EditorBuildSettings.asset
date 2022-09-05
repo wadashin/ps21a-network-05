@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Ikeda/IkedaGameScene.unity
+    guid: 9c95df58e0a719946a213f65ac1fa4ed
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6714eb8b3731e234493388020bf56cd3, type: 2}
