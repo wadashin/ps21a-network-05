@@ -16,11 +16,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     /// <summary>DollyCart のオブジェクト</summary>
     [SerializeField] Transform _dollyCart;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
 
@@ -39,7 +34,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     #region IOnEventCallback の実装
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
-        //// ゲームスタートを 1 とする
+        // ゲームスタートを 1 とする
         //if (photonEvent.Code == 1)
         //{
         //    InitializeGame();

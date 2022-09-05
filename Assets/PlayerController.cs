@@ -34,8 +34,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int _maxAttackStock = 3;
     [Tooltip("攻撃のクールタイム")]
     [SerializeField] float _attackCoolTime = 1f;
-    [Tooltip("攻撃の当たり判定")]
+    [Tooltip("エネミー共通のタグ")]
     [SerializeField] string _enemyTag = "";
+    [Tooltip("攻撃力")]
+    [SerializeField] int _atk;
 
     PhotonView _view;
     Rigidbody _rb;
@@ -63,13 +65,6 @@ public class PlayerController : MonoBehaviour
         if (_view.IsMine)
         {
             _rb = GetComponent<Rigidbody>();
-<<<<<<< HEAD
-            _destination = transform.position;
-            _attackTargetObject = Instantiate(_attackTargetObject);
-            _moveTargetObject = Instantiate(_moveTargetObject);
-            _rb.transform.position = _destination;
-            _attackTargetObject.SetActive(false);
-=======
             _moveDestination = transform.position;
             if (!_attackTargetObject)
             {
@@ -88,7 +83,6 @@ public class PlayerController : MonoBehaviour
             _moveTargetObject = Instantiate(_moveTargetObject);
             _moveTargetObject.SetActive(false);
             _rb.transform.position = _moveDestination;
->>>>>>> 47e0946d76869eb507a5e0bba60ead5387707fc7
             // カメラをセットアップする
             var vcam = FindObjectOfType<CinemachineVirtualCameraBase>();
             vcam.LookAt = transform;
@@ -162,6 +156,9 @@ public class PlayerController : MonoBehaviour
                 dir.y = 0;
                 dir = dir.normalized * speed;
                 _rb.velocity = new Vector3(dir.x, _rb.velocity.y, dir.z);
+                Vector3 angle = transform.eulerAngles;
+                angle = new Vector3(angle.x, Mathf.Atan2(-dir.z, dir.x) / Mathf.PI * 180, angle.z);
+                transform.eulerAngles = angle;
             }
         }
     }
@@ -229,32 +226,9 @@ public class PlayerController : MonoBehaviour
 
         if (!_attackButtonDown)
         {
-<<<<<<< HEAD
-            if (_state == PlayerState.Attack)
-            {
-                _attackTargetObject.SetActive(false);
-                yield break;
-            }
-            if (!_attackTargetObject)
-            {
-                _attackTargetObject = new GameObject();
-                _attackTargetObject.name = nameof(_attackTargetObject);
-                Debug.LogError($"{nameof(_attackTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
-            }
-            if (!_attackTargetObject.activeSelf)
-            {
-                _attackTargetObject.SetActive(true);
-            }
-            Vector3 point = PointGet();
-            float dis = Vector3.Distance(transform.position, point);
-            _destination = dis <= _attackLange ? point : transform.position + (point - transform.position) * (_attackLange / dis);
-            _attackTargetObject.transform.position = _destination;
-            yield return null;
-=======
             _attackTargetObject.SetActive(false);
             //yield break;
             return;
->>>>>>> 47e0946d76869eb507a5e0bba60ead5387707fc7
         }
         if (!_attackTargetObject.activeSelf)
         {
@@ -268,6 +242,9 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// 攻撃のストックがあれば攻撃を開始する
+    /// </summary>
     void Attack()
     {
         _attackDestination = _attackTargetObject.transform.position;
@@ -295,30 +272,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_enemyTag))
+        if (_moveState == PlayerMoveState.Attack)
         {
-<<<<<<< HEAD
-            if (_state == PlayerState.Move)
+            if (other.CompareTag(_enemyTag))
             {
-                _moveTargetObject.SetActive(false);
-                yield break;
+                if(other.gameObject.TryGetComponent<Enemy>(out Enemy e))
+                {
+                    e.CallGetDamage(_atk);
+                }
             }
-            if (!_moveTargetObject)
-            {
-                _moveTargetObject = new GameObject();
-                _moveTargetObject.name = nameof(_moveTargetObject);
-                Debug.LogError($"{nameof(_moveTargetObject)}がアサインされていないため、仮のオブジェクトを私用します");
-            }
-            if (!_moveTargetObject.activeSelf)
-            {
-                _moveTargetObject.SetActive(true);
-                Debug.Log(2);
-            }
-            _destination = PointGet();
-            _moveTargetObject.transform.position = _destination;
-            yield return null;
-=======
->>>>>>> 47e0946d76869eb507a5e0bba60ead5387707fc7
         }
     }
 
