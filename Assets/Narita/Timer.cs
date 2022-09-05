@@ -14,14 +14,26 @@ public class Timer : MonoBehaviour
     ///<summary>表示用テキスト</summary>
     [SerializeField]
     Text timertext = null;
+    GameManager gameManager = null;
+    private void Start()
+    {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        if(!gameManager)
+        {
+            Debug.LogError("タイマーが正常に動きません");
+        }
+    }
     public void TimerMethod()
     {
-        second += Time.deltaTime;
-        if (second >= 10f)
+        if (gameManager.Gamestart)
         {
-            minute++;
-            second = second - 10;
+            second += Time.deltaTime;
+            if (second >= 10f)
+            {
+                minute++;
+                second = second - 10;
+            }
+            timertext.text = minute.ToString("00") + ":" + Mathf.Floor(second).ToString("00");
         }
-        timertext.text = minute.ToString("00") + ":" + Mathf.Floor(second).ToString("00");
     }
 }

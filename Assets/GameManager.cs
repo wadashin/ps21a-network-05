@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     [SerializeField] string _basePrefabName = "Base";
     /// <summary>DollyCart のオブジェクト</summary>
     [SerializeField] Transform _dollyCart;
+    private bool gamestart = false;
+
+    public bool Gamestart { get => gamestart; set => gamestart = value; }
+
     void Update()
     {
 
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             var go = PhotonNetwork.Instantiate(_basePrefabName, Vector3.zero, Quaternion.identity);
             go.transform.SetParent(_dollyCart);
             go.transform.localPosition = Vector3.zero;
+            gamestart = true;
         }
     }
 
