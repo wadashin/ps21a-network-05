@@ -68,7 +68,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
     /// <summary>
     /// Šù‚É‘¶İ‚·‚é•”‰®‚ÉQ‰Á‚·‚é
     /// </summary>
-    private void JoinExistingRoom()
+    public void JoinExistingRoom()
     {
         if (PhotonNetwork.IsConnected)
         {
