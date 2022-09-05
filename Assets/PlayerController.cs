@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _attackCoolTime = 1f;
     [Tooltip("エネミー共通のタグ")]
     [SerializeField] string _enemyTag = "";
+    [Tooltip("攻撃力")]
+    [SerializeField] int _atk;
 
     PhotonView _view;
     Rigidbody _rb;
@@ -274,7 +276,10 @@ public class PlayerController : MonoBehaviour
         {
             if (other.CompareTag(_enemyTag))
             {
-                
+                if(other.gameObject.TryGetComponent<Enemy>(out Enemy e))
+                {
+                    e.GetDamage(_atk);
+                }
             }
         }
     }
