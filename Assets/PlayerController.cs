@@ -272,12 +272,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(1);
         if (_moveState == PlayerMoveState.Attack)
         {
+            Debug.Log(2);
             if (other.CompareTag(_enemyTag))
             {
-                if(other.gameObject.TryGetComponent<Enemy>(out Enemy e))
+                Debug.Log(3);
+                if (other.gameObject.TryGetComponent<Enemy>(out Enemy e))
                 {
+                    Debug.Log(4);
                     e.CallGetDamage(_atk);
                 }
             }
