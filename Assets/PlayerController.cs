@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
             {
                 if(other.gameObject.TryGetComponent<Enemy>(out Enemy e))
                 {
-                    e.GetDamage(_atk);
+                    e.CallGetDamage(_atk);
                 }
             }
         }
