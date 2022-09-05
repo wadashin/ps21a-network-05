@@ -2217,7 +2217,7 @@ GameObject:
   - component: {fileID: 1664131647}
   m_Layer: 0
   m_Name: DollyCart1
-  m_TagString: Untagged
+  m_TagString: BaseParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
