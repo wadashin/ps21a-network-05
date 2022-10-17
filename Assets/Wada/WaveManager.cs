@@ -9,8 +9,8 @@ public class WaveManager : MonoBehaviour
 {
     public static List<SpawnObj> spawnObjs = new List<SpawnObj>();
 
-    [Tooltip("生成する敵プレハブ")]
-    [SerializeField] Enemy _enemy;
+    //[Tooltip("生成する敵プレハブ")]
+    //[SerializeField] Enemy _enemy;
 
     //[Tooltip("敵を生成する間隔")]
     //[SerializeField] float _spawnTime = 1;
@@ -39,6 +39,8 @@ public class WaveManager : MonoBehaviour
         set { _waveData[_waveIndex].SpawnTime = value; }
     }
 
+    /// <summary>ウェーブのデータを入れる配列</summary>
+    public WaveData[] WaveData { get => _waveData; set => _waveData = value; }
 
     private void Start()
     {

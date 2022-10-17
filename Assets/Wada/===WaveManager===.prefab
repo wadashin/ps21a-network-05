@@ -44,6 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2255849ecb684e4e96dce6d03196131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 304515026569322497, guid: bb20a81d8a6f8d34e90c9301e35cb9f3, type: 3}
-  _spawnTime: 1
-  setTime: 10
+  _waveData:
+  - WaveTime: 10
+    MaxAmount: 3
+    SpawnTime: 1
+    EnemySets:
+    - Enemy: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+      Rate: 0
+  - WaveTime: 10
+    MaxAmount: 10
+    SpawnTime: 2
+    EnemySets:
+    - Enemy: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+      Rate: 0
+  - WaveTime: 10
+    MaxAmount: 10
+    SpawnTime: 10
+    EnemySets:
+    - Enemy: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+      Rate: 0
