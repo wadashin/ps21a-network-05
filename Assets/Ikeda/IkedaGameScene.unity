@@ -2387,6 +2387,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _waveData.Array.data[1].WaveTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
       propertyPath: _waveData.Array.data[0].MaxAmount
       value: 3
       objectReference: {fileID: 0}
