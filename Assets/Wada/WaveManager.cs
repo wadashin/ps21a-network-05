@@ -24,6 +24,7 @@ public class WaveManager : MonoBehaviour
     [Tooltip("ウェーブのデータを入れる配列")]
     [SerializeField] WaveData[] _waveData = default;
     int _waveIndex = 0;
+    [SerializeField] SpawnData _spawnData;
 
 
     //float _time = 0;//ウェーブ開始時はこいつをゼロにする
@@ -46,6 +47,9 @@ public class WaveManager : MonoBehaviour
     {
         //time = setTime;
         //WaveStart();
+        _spawnData = _waveData;
+        _waveData = _spawnData;
+        
     }
 
     public void WaveStart()
