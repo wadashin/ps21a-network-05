@@ -23,8 +23,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
 
     private void Start()
     {
-        // Photon ‚ÉÚ‘±‚·‚é
-        Connect("1.0"); // 1.0 ‚Íƒo[ƒWƒ‡ƒ“”Ô†i“¯‚¶ƒo[ƒWƒ‡ƒ“‚ğw’è‚µ‚½ƒNƒ‰ƒCƒAƒ“ƒg“¯m‚ªÚ‘±‚Å‚«‚éj
+
     }
 
     /// <summary>
@@ -95,6 +94,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime —
             PhotonNetwork.CreateRoom(null, roomOptions); // ƒ‹[ƒ€–¼‚É null ‚ğw’è‚·‚é‚Æƒ‰ƒ“ƒ_ƒ€‚Èƒ‹[ƒ€–¼‚ğ•t‚¯‚é
         }
     }
+
+
 
     /// <summary>
     /// ƒvƒŒƒCƒ„[‚ğ¶¬‚·‚é
