@@ -21,8 +21,9 @@ public class WaveManager : MonoBehaviour
     //[Tooltip("ウェーブとインターバルの長さを交互に入れる配列")]
     //[SerializeField] float[] _waveArray = default;
 
-    [Tooltip("ウェーブのデータを入れる配列")]
-    [SerializeField] WaveData[] _waveData = default;
+    /// <summary>ウェーブのデータを入れる配列</summary>
+    [SerializeField]
+    WaveData[] _waveData = default;
     int _waveIndex = 0;
     [SerializeField] SpawnData _spawnData;
 
@@ -49,7 +50,7 @@ public class WaveManager : MonoBehaviour
         //WaveStart();
         _spawnData = _waveData;
         _waveData = _spawnData;
-        
+
     }
 
     public void WaveStart()
@@ -104,33 +105,20 @@ public class WaveManager : MonoBehaviour
             if (spawnObjs.Count > 0)
             {
                 ActiveEnemysNullRemove();
-                while (EnemyAmountCheck() && time > _waveData[_waveIndex].SpawnTime)
+                while (time > _waveData[_waveIndex].SpawnTime)
                 {
                     time -= _waveData[_waveIndex].SpawnTime;
-                    float allRange = spawnObjs.Sum(x => Mathf.Abs(x.Range));
-                    float randomRange = Random.Range(0, allRange);
-                    for (int i = 0; i < spawnObjs.Count; i++)
+                    Debug.Log("Spawn");
+                    if (EnemyAmountCheck())
                     {
-                        randomRange -= Mathf.Abs(spawnObjs[i].Range);
-                        if (randomRange <= 0)
-                        {
-                            Enemy enemy = EnemySelect();
-                            if (enemy)
-                            {
-                                GameObject go = spawnObjs[i].SpawnEnemy(enemy.name);
-                                if (go.TryGetComponent<Enemy>(out Enemy e))
-                                {
-                                    _activeEnemys.Add(e);
-                                }
-                            }
-                            break;
-                        }
+                        Spawn();
                     }
                 }
             }
             time += Time.deltaTime;
             yield return null;
         }
+
     }
 
     void ActiveEnemysNullRemove()
@@ -146,6 +134,28 @@ public class WaveManager : MonoBehaviour
     }
 
 
+    void Spawn()
+    {
+        float allRange = spawnObjs.Sum(x => Mathf.Abs(x.Range));
+        float randomRange = Random.Range(0, allRange);
+        for (int i = 0; i < spawnObjs.Count; i++)
+        {
+            randomRange -= Mathf.Abs(spawnObjs[i].Range);
+            if (randomRange <= 0)
+            {
+                Enemy enemy = EnemySelect();
+                if (enemy)
+                {
+                    GameObject go = spawnObjs[i].SpawnEnemy(enemy.name);
+                    if (go.TryGetComponent<Enemy>(out Enemy e))
+                    {
+                        _activeEnemys.Add(e);
+                    }
+                }
+                break;
+            }
+        }
+    }
     bool EnemyAmountCheck()
     {
         if (_activeEnemys.Count < _waveData[_waveIndex].MaxAmount)
