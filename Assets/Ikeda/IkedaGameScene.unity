@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35aa2ae7053ff54ba3809377104f401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menberNum: 1
+  _menberNum: 3
   _waveData:
   - WaveTime: 100
     MaxAmount: 4
@@ -172,7 +172,25 @@ MonoBehaviour:
     - Enemy: {fileID: 304515026569322497, guid: d2e692b45070f924f8223f1054ea6ffa, type: 3}
       Rate: 0
   _waveManager: {fileID: 40928031}
-  _defaultMenberNum: 4
+  _amountFactor:
+  - 0.2
+  - 0.45
+  - 0.7
+  - 1
+  _spawnTimeFactor:
+  - 0.2
+  - 0.45
+  - 0.7
+  - 1
+  _levelFactors:
+  - Amount: 0.2
+    SpawnTime: 3
+  - Amount: 0.45
+    SpawnTime: 2.5
+  - Amount: 0.7
+    SpawnTime: 1.5
+  - Amount: 1
+    SpawnTime: 1
 --- !u!4 &45408426
 Transform:
   m_ObjectHideFlags: 0
