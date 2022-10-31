@@ -123,6 +123,71 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &40928031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+  m_PrefabInstance: {fileID: 1675092652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2255849ecb684e4e96dce6d03196131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &45408424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45408426}
+  - component: {fileID: 45408425}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &45408425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45408424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35aa2ae7053ff54ba3809377104f401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _menberNum: 1
+  _waveData:
+  - WaveTime: 100
+    MaxAmount: 4
+    SpawnTime: 1
+    EnemySets:
+    - Enemy: {fileID: 304515026569322497, guid: d2e692b45070f924f8223f1054ea6ffa, type: 3}
+      Rate: 0
+  _waveManager: {fileID: 40928031}
+  _defaultMenberNum: 4
+--- !u!4 &45408426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45408424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3762301, y: -2.3845348, z: 3.5948653}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &110066731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2383,6 +2448,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
       propertyPath: _waveData.Array.data[0].WaveTime
       value: 3
       objectReference: {fileID: 0}
@@ -2416,6 +2485,30 @@ PrefabInstance:
       objectReference: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
     - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
       propertyPath: _waveData.Array.data[2].EnemySets.Array.data[0].Enemy
+      value: 
+      objectReference: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[0].EnemySets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[1].EnemySets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[2].EnemySets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[0].EnemySets.Array.data[0].Enemy
+      value: 
+      objectReference: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[1].EnemySets.Array.data[0].Enemy
+      value: 
+      objectReference: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
+    - target: {fileID: 5114576184561161497, guid: e2a4d1ef7a5ad2447ba75794032d7ce3, type: 3}
+      propertyPath: _spawnData.WaveData.Array.data[2].EnemySets.Array.data[0].Enemy
       value: 
       objectReference: {fileID: 304515026569322497, guid: a45a30abdde1bf64385c57508cac6a3c, type: 3}
     m_RemovedComponents: []
